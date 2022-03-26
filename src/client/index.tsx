@@ -14,9 +14,10 @@ function initializeSocket(state: State, setState: StateSetter)
 {
   state.socket = io();
 
-  state.socket.on('PlayerCreated', () => {
+  state.socket.on('PlayerCreated', (name) => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'RoomSelection';
+      draft.playerName = name;
     }));
   });
 

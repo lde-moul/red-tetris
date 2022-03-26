@@ -42,7 +42,7 @@ io.on('connection', (socket: Socket) => {
   socket.on('CreatePlayer', (name: string) => {
     player.name = name;
 
-    socket.emit('PlayerCreated');
+    socket.emit('PlayerCreated', name);
     socket.emit('RoomNames', rooms.map(room => room.name));
   });
 

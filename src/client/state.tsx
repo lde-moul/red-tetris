@@ -8,9 +8,8 @@ import { Socket } from 'socket.io-client';
 
 export interface State {
   socket?: Socket;
-
   pageId: string;
-
+  playerName: string;
   room?: Room;
   roomNames: string[];
 }
@@ -19,6 +18,7 @@ export type StateSetter = (setter: (prev: State) => State) => void;
 
 const useValue = () => useState<State>({
   pageId: 'PlayerCreation',
+  playerName: 'Player',
   roomNames: [],
 });
 
