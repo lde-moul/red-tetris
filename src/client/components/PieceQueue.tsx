@@ -2,7 +2,8 @@
 
 import { attachPieceToBoard, getEmptyBoard } from '../Board';
 import Piece, { translatePiece } from '../Piece';
-import '../../../styles.css';
+import '../../../css/board.css';
+import '../../../css/game.css';
 
 import React from 'react';
 import Board from './Board';

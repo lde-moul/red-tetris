@@ -5,7 +5,8 @@ import PieceQueue from './PieceQueue';
 import Player from '../Player';
 import PlayerInfo from './PlayerInfo';
 import Stats from './Stats';
-import '../../../styles.css';
+import '../../../css/game.css';
+import '../../../css/player-info.css';
 
 import React from 'react';
 

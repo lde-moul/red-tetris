@@ -1,0 +1,67 @@
+.board {
+  width: 50vh;
+  height: 100vh;
+  flex-shrink: 0;
+
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+}
+
+.piece-queue-board {
+  width: 80%;
+  height: 80%;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.block {
+  border: 1vmin outset
+}
+
+.empty-block {
+  background: #777;
+  border-color: #999;
+}
+
+.malus-block {
+  background: #333;
+  border-color: #555;
+}
+
+.full-block1 {
+  background: #921;
+  border-color: #B21;
+}
+
+.full-block2 {
+  background: #D00;
+  border-color: #F00;
+}
+
+.full-block3 {
+  background: #621;
+  border-color: #821;
+}
+
+.full-block4 {
+  background: #D70;
+  border-color: #F80;
+}
+
+.full-block5 {
+  background: #944;
+  border-color: #B44;
+}
+
+.full-block6 {
+  background: #738;
+  border-color: #938;
+}
+
+.full-block7 {
+  background: #D96;
+  border-color: #FA6;
+}

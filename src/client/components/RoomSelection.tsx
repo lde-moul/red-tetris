@@ -3,7 +3,7 @@
 import RoomCreation from './RoomCreation';
 import useSocket from '../socket';
 import { useTracked } from '../state';
-import "../../../styles.css";
+import "../../../css/main.css";
 import Title from './Title';
 
 import React, { useEffect } from 'react';

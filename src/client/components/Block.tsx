@@ -1,7 +1,7 @@
 'use strict';
 
 import { BlockType } from '../Board';
-import '../../../styles.css';
+import '../../../css/board.css';
 
 import React from 'react';
 

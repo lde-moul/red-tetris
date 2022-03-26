@@ -1,7 +1,7 @@
 'use strict';
 
 import Player from '../Player';
-import '../../../styles.css';
+import '../../../css/player-info.css';
 
 import React from 'react';
 

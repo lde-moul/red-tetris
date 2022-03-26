@@ -7,7 +7,8 @@ import handleGameKeyUp from '../handleGameKeyUp';
 import handleGameTick from '../handleGameTick';
 import HUD from './HUD';
 import { useTracked } from '../state';
-import '../../../styles.css';
+import '../../../css/board.css';
+import '../../../css/game.css';
 
 import produce from 'immer';
 import React, { useEffect } from 'react';

@@ -2,7 +2,7 @@
 
 import useSocket from '../socket';
 import { useTracked } from '../state';
-import '../../../styles.css';
+import '../../../css/main.css';
 
 import React from 'react';
 

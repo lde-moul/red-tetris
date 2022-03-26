@@ -1,0 +1,77 @@
+* {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+body {
+  margin: 0px;
+  background: rgb(32, 32, 36);
+}
+
+button {
+  height: 2rem;
+  background: darkred;
+  border-width: 0.2rem;
+  border-color: brown;
+}
+
+input {
+  height: 2rem;
+  background: white;
+  border-width: 0.2rem;
+  border-color: brown;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.flex-v {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-center-h {
+  text-align: center;
+}
+
+.title {
+  color: red;
+  font-size: 10vh;
+  font-family: sans-serif;
+  text-shadow: 0vh 0vh 1vh red, 0vh 1vh darkred, 0vh 2vh 1vh black;
+
+  margin-bottom: 30vh;
+}
+
+.menu {
+  min-width: 15rem;
+  padding: 3rem 6rem;
+  background: darkred;
+  border: 1.5rem outset red;
+  border-radius: 4rem;
+}
+
+form > * {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0.1rem 0rem;
+}
+
+.menu-sep {
+  margin-top: 1rem;
+}
+
+.player-list {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+}
+
+.winner-name {
+  display: inline;
+  font-weight: bolder;
+  text-shadow: 0em 0em 0.5em palegoldenrod;
+  color: palegoldenrod;
+}

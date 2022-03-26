@@ -2,7 +2,6 @@
 
 import Block from './Block';
 import Board from '../Board';
-import '../../../styles.css';
 
 import React from 'react';
 

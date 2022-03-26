@@ -1,6 +1,6 @@
 'use strict';
 
-import '../../../styles.css';
+import '../../../css/game.css';
 
 import React from 'react';
 
