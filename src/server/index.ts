@@ -85,6 +85,15 @@ io.on('connection', (socket: Socket) => {
     room.startGame();
   });
 
+  socket.on('RestartGame', () => {
+    let room = player.room;
+
+    if (!(room && room.phase == 'results' && room.host == player))
+      return;
+
+    room.startPreparation();
+  });
+
   socket.on('MovePiece', (offset: Vector2D) => {
     let piece = player.piece;
     if (!piece)
@@ -105,7 +114,9 @@ io.on('connection', (socket: Socket) => {
       if (offset.y > 0)
       {
         piece.land();
-        player.spawnNextPiece();
+
+        if (!player.lost)
+          player.spawnNextPiece();
       }
     }
   });
@@ -131,7 +142,9 @@ io.on('connection', (socket: Socket) => {
 
     piece.translate(new Vector2D(0, -1));
     piece.land();
-    player.spawnNextPiece();
+
+    if (!player.lost)
+      player.spawnNextPiece();
   });
 });
 

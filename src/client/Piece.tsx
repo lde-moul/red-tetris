@@ -1,6 +1,6 @@
 'use strict';
 
-import Board, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty } from "./Board";
+import Board, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty, isPositionInsideBoard } from "./Board";
 import Player from "./LocalPlayer";
 import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";
 
@@ -24,6 +24,9 @@ export const rotatePiece = (piece: Piece): Piece => ({
 export const canPieceBeHere = (piece: Piece, board: Board): boolean =>
   piece.blocks.every(block => isBoardBlockEmpty(board, block));
 
+export const isPieceOverflowing = (piece: Piece, board: Board): boolean =>
+  !piece.blocks.every(block => isPositionInsideBoard(block, board));
+
 export const spawnNextPiece = (player: Player): Player => {
   const pieceQueue = [...player.pieceQueue];
   const piece = pieceQueue.shift() ?? null;
@@ -43,11 +46,18 @@ export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Pla
       piece: movedPiece,
       board: attachPieceToBoard(movedPiece, boardWithoutPiece)
     };
-  else if (offset.y > 0)
-    return spawnNextPiece({
-      ...player,
-      board: clearFullLines(player.board)
-    });
+  else if (offset.y > 0) {
+    if (isPieceOverflowing(movedPiece, boardWithoutPiece))
+      return {
+        ...player,
+        piece: null
+      };
+    else
+      return spawnNextPiece({
+        ...player,
+        board: clearFullLines(player.board)
+      });
+  }
   else
     return player;
 };

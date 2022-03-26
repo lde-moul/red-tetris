@@ -39,10 +39,20 @@ export default class Piece {
     return this.blocks.every(block => this.player.board.isBlockEmpty(block));
   }
 
+  isOverflowing(): boolean {
+    return !this.blocks.every(block => this.player.board.isPositionInside(block));
+  }
+
   land() {
     const board = this.player.board;
+
     board.attachPiece(this);
-    board.clearFullLines();
+
+    if (this.isOverflowing())
+      this.player.lose();
+    else {
+      board.clearFullLines();
+    }
 
     for (const receiver of this.player.room.players)
       this.player.emitSpectrum(receiver);

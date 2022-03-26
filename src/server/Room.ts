@@ -8,16 +8,16 @@ import Vector2D from "./Vector2D";
 
 export default class {
   name: string;
-  phase: 'preparation' | 'game';
+  phase: 'preparation' | 'game' | 'results';
   players: Player[];
   host?: Player;
   pieceQueue: Piece[];
 
   constructor(name: string) {
     this.name = name;
-    this.phase = 'preparation';
     this.players = [];
-    this.pieceQueue = [];
+
+    this.startPreparation();
   }
 
   addPlayer(player: Player) {
@@ -34,6 +34,9 @@ export default class {
 
     for (const receiver of this.players)
       receiver.socket.emit('LeaveRoom', player.name);
+
+    if (this.players.filter(player => !player.lost).length <= 1)
+      this.endGame();
   }
 
   setHost(host: Player) {
@@ -43,12 +46,22 @@ export default class {
       receiver.socket.emit('SetHost', host.name);
   }
 
+  startPreparation() {
+    this.phase = 'preparation';
+    this.pieceQueue = [];
+
+    for (const receiver of this.players)
+      receiver.socket.emit('RestartGame');
+  }
+
   startGame() {
     this.phase = 'game';
 
     this.pieceQueue = [];
 
     for (const player of this.players) {
+      player.lost = false;
+
       player.board = new Board(new Vector2D(10, 20));
 
       player.piece = null;
@@ -62,6 +75,13 @@ export default class {
 
       player.spawnNextPiece();
     }
+  }
+
+  endGame() {
+    this.phase = 'results';
+
+    for (const receiver of this.players)
+      receiver.socket.emit('EndGame');
   }
 
   chooseNextPiece() {

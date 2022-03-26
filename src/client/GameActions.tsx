@@ -2,7 +2,7 @@
 
 import { attachPieceToBoard, clearFullLines, detachPieceFromBoard } from './Board';
 import LocalPlayer from './LocalPlayer';
-import { canPieceBeHere, movePiece, rotatePiece, spawnNextPiece, translatePiece } from './Piece';
+import { canPieceBeHere, isPieceOverflowing, movePiece, rotatePiece, spawnNextPiece, translatePiece } from './Piece';
 
 import { Socket } from 'socket.io-client';
 
@@ -43,12 +43,25 @@ export const dropPieceAction = (player: LocalPlayer, tick: number, socket: Socke
     const movedPiece = translatePiece(droppedPiece, { x: 0, y: 1 });
 
     if (!canPieceBeHere(movedPiece, boardWithoutPiece))
-      return spawnNextPiece({
-        ...player,
-        board: clearFullLines(attachPieceToBoard(droppedPiece, boardWithoutPiece)),
-        fallTick: tick
-      });
+      break;
 
     droppedPiece = movedPiece;
   }
+
+  const droppedPlayer: LocalPlayer = {
+    ...player,
+    board: attachPieceToBoard(droppedPiece, boardWithoutPiece),
+    fallTick: tick
+  };
+
+  if (isPieceOverflowing(droppedPiece, boardWithoutPiece))
+    return {
+      ...droppedPlayer,
+      piece: null
+    };
+  else
+    return spawnNextPiece({
+      ...droppedPlayer,
+      board: clearFullLines(droppedPlayer.board)
+    });
 };

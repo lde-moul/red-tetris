@@ -11,6 +11,7 @@ export default class {
   socket: Socket;
   name: string;
   room?: Room;
+  lost?: boolean;
   board?: Board;
   piece?: Piece;
   pieceId?: number;
@@ -45,5 +46,15 @@ export default class {
 
   emitSpectrum(receiver: Player) {
     receiver.socket.emit('Spectrum', this.name, this.board.getSpectrum());
+  }
+
+  lose() {
+    this.lost = true;
+
+    for (const receiver of this.room.players)
+      receiver.socket.emit('PlayerLost', this.name);
+
+    if (this.room.players.filter(player => !player.lost).length <= 1)
+      this.room.endGame();
   }
 }

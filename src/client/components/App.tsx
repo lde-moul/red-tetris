@@ -2,6 +2,7 @@
 
 import Game from './Game';
 import GamePreparation from './GamePreparation';
+import GameResults from './GameResults';
 import { getEmptyBoard } from '../Board';
 import Piece, { spawnNextPiece } from '../Piece';
 import PlayerCreation from './PlayerCreation';
@@ -34,7 +35,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
       if (!draft.room)
         return;
 
-      draft.room.players.push({ name });
+      draft.room.players.push({ name, lost: false });
 
       if (name === draft.playerName)
         draft.room.player = { name: draft.playerName };
@@ -77,6 +78,18 @@ const initializeSocket = (state: State, setState: StateSetter) => {
     }));
   });
 
+  state.socket.on('EndGame', () => {
+    setState(prev => produce(prev, draft => {
+      draft.pageId = 'GameResults';
+    }));
+  });
+
+  state.socket.on('RestartGame', () => {
+    setState(prev => produce(prev, draft => {
+      draft.pageId = 'GamePreparation';
+    }));
+  });
+
   state.socket.on('NextPiece', (piece: Piece) => {
     setState(prev => produce(prev, draft => {
       draft.room.player.pieceQueue.push(piece);
@@ -93,6 +106,16 @@ const initializeSocket = (state: State, setState: StateSetter) => {
 
       const player = draft.room.players.find(player => player.name === name);
       player.spectrum = spectrum;
+    }));
+  });
+
+  state.socket.on('PlayerLost', (name: string) => {
+    setState(prev => produce(prev, draft => {
+      if (!draft.room)
+        return;
+
+      const player = draft.room.players.find(player => player.name === name);
+      player.lost = true;
     }));
   });
 };
@@ -116,6 +139,9 @@ export default () => {
       break;
     case 'Game':
       Page = Game;
+      break;
+    case 'GameResults':
+      Page = GameResults;
       break;
   }
 
