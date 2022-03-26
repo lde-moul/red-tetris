@@ -62,11 +62,12 @@ export default class Piece {
               opponent.piece.translate(new Vector2D(0, -numMalusLines));
 
             opponent.socket.emit('AddMalusLines', numMalusLines);
+            opponent.emitSpectrum(this.player);
           }
       }
     }
 
     for (const receiver of this.player.room.players)
       this.player.emitSpectrum(receiver);
-  }
+}
 };
