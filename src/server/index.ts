@@ -30,6 +30,10 @@ io.on('connection', (socket: Socket) => {
   socket.on('disconnect', () => {
     players.splice(players.indexOf(player), 1);
   })
+
+  socket.on('CreatePlayer', (name: string) => {
+    player.name = name;
+  });
 });
 
 server.listen(port, () => {
