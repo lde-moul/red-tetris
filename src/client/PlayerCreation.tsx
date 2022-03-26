@@ -1,5 +1,6 @@
 'use strict';
 
+import emitWithAck from './emitWithAck';
 import state from './state';
 
 import React, { useState } from 'react';
@@ -9,9 +10,14 @@ export default () =>
 {
   const [name, setName] = useState('Player name');
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    socket.emit('CreatePlayer', name);
+
+    try {
+      await emitWithAck(state.socket, 'CreatePlayer', name);
+    } catch (err) {
+      // ...
+    }
   };
 
   const handleNameChange: React.FormEventHandler<HTMLInputElement> = (event) => {
