@@ -8,16 +8,17 @@ import React from 'react';
 
 interface BoardProps {
   board: Board;
+  className: string;
 };
 
-export default ({ board }: BoardProps) => {
+export default ({ board, className }: BoardProps) => {
   let blocks = [];
   for (const line of board.blocks)
     for (const filled of line)
       blocks.push(<Block filled={filled} />);
 
   return (
-    <div className="board">
+    <div className={className}>
       {blocks}
     </div>
   );

@@ -38,8 +38,8 @@ export default () => {
   return (
     <div className="game">
       <div className="game-padding"></div>
-      <Board board={state.room.player.board} />
-      <HUD players={opponents} />
+      <Board board={state.room.player.board} className="board" />
+      <HUD pieceQueue={state.room.player.pieceQueue} players={opponents} />
     </div>
   );
 };
