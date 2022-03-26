@@ -22,7 +22,7 @@ export const movePieceDownAction = (player: LocalPlayer, tick: number, socket: S
   socket.emit('MovePiece', offset);
 
   return {
-    ...movePiece(player, offset, socket),
+    ...movePiece(player, offset),
     fallTick: tick
   };
 };
@@ -30,13 +30,13 @@ export const movePieceDownAction = (player: LocalPlayer, tick: number, socket: S
 export const movePieceLeftAction = (player: LocalPlayer, socket: Socket): LocalPlayer => {
   const offset = { x: -1, y: 0 };
   socket.emit('MovePiece', offset);
-  return movePiece(player, offset, socket);
+  return movePiece(player, offset);
 };
 
 export const movePieceRightAction = (player: LocalPlayer, socket: Socket): LocalPlayer => {
   const offset = { x: 1, y: 0 };
   socket.emit('MovePiece', offset);
-  return movePiece(player, offset, socket);
+  return movePiece(player, offset);
 };
 
 export const rotatePieceAction = (player: LocalPlayer, socket: Socket): LocalPlayer => {
@@ -63,7 +63,7 @@ export const dropPieceAction = (player: LocalPlayer, tick: number, socket: Socke
   const offset = { x: 0, y: 1 };
 
   while (canPieceBeHere(translatePiece(player.piece, offset), player.board))
-    player = movePiece(player, offset, socket);
+    player = movePiece(player, offset);
 
-  return movePiece({ ...player, fallTick: tick }, offset, socket);
+  return movePiece({ ...player, fallTick: tick }, offset);
 };

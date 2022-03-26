@@ -37,7 +37,7 @@ export const spawnNextPiece = (player: Player): Player => {
   return { ...player, piece, pieceQueue };
 };
 
-export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Player => {
+export const movePiece = (player: Player, offset: Vector2D): Player => {
   const movedPiece = translatePiece(player.piece, offset);
 
   if (canPieceBeHere(movedPiece, player.board))
@@ -46,16 +46,18 @@ export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Pla
       piece: movedPiece
     };
   else if (offset.y > 0) {
+    const attachedBoard = attachPieceToBoard(player.piece, player.board);
+
     if (isPieceOverflowing(player.piece, player.board))
       return {
         ...player,
         piece: null,
-        board: attachPieceToBoard(player.piece, player.board)
+        board: attachedBoard
       };
     else
       return spawnNextPiece({
         ...player,
-        board: clearFullLines(attachPieceToBoard(player.piece, player.board))
+        board: clearFullLines(attachedBoard)
       });
   }
   else
