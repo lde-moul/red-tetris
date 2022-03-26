@@ -33,11 +33,13 @@ export default () => {
     };
   }, []);
 
+  const opponents = state.room.players.filter(player => player.name !== state.playerName);
+
   return (
     <div className="game">
       <div className="game-padding"></div>
       <Board board={state.room.player.board} />
-      <HUD players={state.room.players} />
+      <HUD players={opponents} />
     </div>
   );
 };
