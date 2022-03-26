@@ -13,5 +13,5 @@ export const spawnNextPiece = (player: Player) =>
     const queue = [...player.pieceQueue];
     const piece = queue.shift();
 
-    return { piece, queue, ...player };
+    return { ...player, piece, queue };
   };
