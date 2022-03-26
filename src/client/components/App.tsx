@@ -22,7 +22,7 @@ export default () => {
   const [state, setState] = useTracked();
 
   if (!state.socket)
-    initializeSocket(state, setState);
+    state.socket = initializeSocket(null, setState);
 
   const Page = pages[state.pageId];
   return <Page />;

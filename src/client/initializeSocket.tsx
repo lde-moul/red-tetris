@@ -3,28 +3,28 @@
 import { addMalusLines, getEmptyBoard } from './Board';
 import Piece, { spawnNextPiece, translatePiece } from './Piece';
 import Room from './Room';
-import { State, StateSetter } from './state';
+import { StateSetter } from './state';
 
 import produce from 'immer';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 
-export default (state: State, setState: StateSetter) => {
-  state.socket = io();
+export default (host: string, setState: StateSetter): Socket => {
+  const socket = io(host);
 
-  state.socket.on('PlayerCreated', (name) => {
+  socket.on('PlayerCreated', (name) => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'RoomSelection';
       draft.playerName = name;
     }));
   });
 
-  state.socket.on('RoomNames', (names) => {
+  socket.on('RoomNames', (names) => {
     setState(prev => produce(prev, draft => {
       draft.roomNames = names;
     }));
   });
 
-  state.socket.on('JoinRoom', (name: string) => {
+  socket.on('JoinRoom', (name: string) => {
     setState(prev => produce(prev, draft => {
       if (!draft.room)
         return;
@@ -36,7 +36,7 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('LeaveRoom', (name: string) => {
+  socket.on('LeaveRoom', (name: string) => {
     setState(prev => produce(prev, draft => {
       if (!draft.room)
         return;
@@ -46,7 +46,7 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('SetHost', (name?: string) => {
+  socket.on('SetHost', (name?: string) => {
     setState(prev => produce(prev, draft => {
       if (!draft.room)
         return;
@@ -55,14 +55,14 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('RoomState', (room: Room) => {
+  socket.on('RoomState', (room: Room) => {
     setState(prev => produce(prev, draft => {
       draft.room = room;
       draft.pageId = 'GamePreparation';
     }));
   });
 
-  state.socket.on('StartGame', () => {
+  socket.on('StartGame', () => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'Game';
 
@@ -83,19 +83,19 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('EndGame', () => {
+  socket.on('EndGame', () => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'GameResults';
     }));
   });
 
-  state.socket.on('RestartGame', () => {
+  socket.on('RestartGame', () => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'GamePreparation';
     }));
   });
 
-  state.socket.on('NextPiece', (piece: Piece) => {
+  socket.on('NextPiece', (piece: Piece) => {
     setState(prev => produce(prev, draft => {
       draft.room.player.pieceQueue.push(piece);
 
@@ -104,7 +104,7 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('AddMalusLines', (numLines: number) => {
+  socket.on('AddMalusLines', (numLines: number) => {
     setState(prev => produce(prev, draft => {
       draft.room.player.board = addMalusLines(draft.room.player.board, numLines);
 
@@ -113,7 +113,7 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('Spectrum', (name: string, spectrum: number[]) => {
+  socket.on('Spectrum', (name: string, spectrum: number[]) => {
     setState(prev => produce(prev, draft => {
       if (!draft.room)
         return;
@@ -123,7 +123,7 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('PlayerLost', (name: string) => {
+  socket.on('PlayerLost', (name: string) => {
     setState(prev => produce(prev, draft => {
       if (!draft.room)
         return;
@@ -132,4 +132,6 @@ export default (state: State, setState: StateSetter) => {
       player.lost = true;
     }));
   });
+
+  return socket;
 };
