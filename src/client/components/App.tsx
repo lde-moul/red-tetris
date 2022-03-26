@@ -36,7 +36,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
 
       draft.room.players.push({ name });
 
-      if (name == draft.playerName)
+      if (name === draft.playerName)
         draft.room.player = { name: draft.playerName };
     }));
   });
@@ -46,7 +46,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
       if (!prev.room)
         return;
 
-      const playerIndex = prev.room.players.findIndex(player => player.name == name);
+      const playerIndex = prev.room.players.findIndex(player => player.name === name);
       draft.room.players.splice(playerIndex, 1);
     }));
   });
