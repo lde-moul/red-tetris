@@ -88,20 +88,19 @@ export default () => {
     initializeSocket(state, setState);
 
   let Page;
-  switch (state.pageId)
-  {
-  case 'PlayerCreation':
-    Page = PlayerCreation;
-    break;
-  case 'RoomSelection':
-    Page = RoomSelection;
-    break;
-  case 'GamePreparation':
-    Page = GamePreparation;
-    break;
-  case 'Game':
-    Page = Game;
-    break;
+  switch (state.pageId) {
+    case 'PlayerCreation':
+      Page = PlayerCreation;
+      break;
+    case 'RoomSelection':
+      Page = RoomSelection;
+      break;
+    case 'GamePreparation':
+      Page = GamePreparation;
+      break;
+    case 'Game':
+      Page = Game;
+      break;
   }
 
   return <Page />;

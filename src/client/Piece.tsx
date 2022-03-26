@@ -23,13 +23,12 @@ export const rotatePiece = (piece: Piece): Piece => ({
 export const canPieceBeHere = (piece: Piece, board: boolean[][]): boolean =>
   piece.blocks.every(block => isBoardBlockEmpty(board, block));
 
-export const spawnNextPiece = (player: Player): Player =>
-  {
-    const pieceQueue = [...player.pieceQueue];
-    const piece = pieceQueue.shift() ?? null;
+export const spawnNextPiece = (player: Player): Player => {
+  const pieceQueue = [...player.pieceQueue];
+  const piece = pieceQueue.shift() ?? null;
 
-    return { ...player, piece, pieceQueue };
-  };
+  return { ...player, piece, pieceQueue };
+};
 
 export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Player => {
   socket.emit('MovePiece', offset);

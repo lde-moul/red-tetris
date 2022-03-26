@@ -48,8 +48,7 @@ export default class {
 
     this.pieceQueue = [];
 
-    for (const player of this.players)
-    {
+    for (const player of this.players) {
       player.board = new Board();
 
       player.piece = null;
