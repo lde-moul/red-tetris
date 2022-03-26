@@ -2,14 +2,38 @@ body {
   margin: 0px;
 }
 
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-padding {
+  width: 50vh;
+  height: 100vh;
+}
+
 .board {
+  width: 50vh;
+  height: 100vh;
+  flex-shrink: 0;
   display: grid;
-  margin: auto;
-  gap: 0.1vmin;
-  width: 50vmin;
-  height: 100vmin;
+  gap: 0.1vh;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(20, 1fr);
+}
+
+.hud {
+  width: 50vh;
+  height: 100vh;
+  flex-shrink: 0;
+}
+
+@media all and (max-aspect-ratio: 1 / 1) {
+  .board, .hud {
+    width: 50vw;
+    height: 100vw;
+  }
 }
 
 .empty-block {

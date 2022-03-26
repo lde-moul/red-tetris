@@ -38,8 +38,12 @@ export default () => {
       board.push(<Block filled={filled} />);
 
   return (
-    <div className="board">
-      {board}
+    <div className="game">
+      <div className="game-padding"></div>
+      <div className="board">
+        {board}
+      </div>
+      <div className="hud"></div>
     </div>
   );
 };
