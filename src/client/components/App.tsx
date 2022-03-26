@@ -31,7 +31,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
 
   state.socket.on('JoinRoom', (name: string) => {
     setState(prev => produce(prev, draft => {
-      if (!prev.room)
+      if (!draft.room)
         return;
 
       draft.room.players.push({ name });
@@ -43,7 +43,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
 
   state.socket.on('LeaveRoom', (name: string) => {
     setState(prev => produce(prev, draft => {
-      if (!prev.room)
+      if (!draft.room)
         return;
 
       const playerIndex = prev.room.players.findIndex(player => player.name === name);
