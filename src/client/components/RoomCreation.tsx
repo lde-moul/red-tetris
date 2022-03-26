@@ -43,8 +43,8 @@ export default () => {
   const namePattern = "[\\w +*/%^()=<>:,;.!?'&quot;~@#$&-]+";
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Create room:</label>
+    <form onSubmit={handleSubmit} className="menu-sep flex-v">
+      <label className="text-center-h">Create room:</label>
       <input type="text" ref={nameInputRef} required pattern={namePattern} minLength={1} maxLength={20} value={name} onChange={handleNameChange} onInvalid={handleInvalidName} />
       <button type="submit">
         Create

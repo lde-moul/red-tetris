@@ -15,15 +15,23 @@ export default () => {
   const winner = state.room.players.find(player => !player.lost);
 
   const restartButton = (state.playerName !== state.room.hostName) ? null : (
-    <button type="button" onClick={() => handleRestart()}>
+    <button type="button" onClick={() => handleRestart()} className="menu-sep">
       Restart
     </button>
   );
 
   return (
-    <div>
-      { winner ? (winner.name + ' won the round!') : 'Game over' }
-      {restartButton}
+    <div className="flex-v">
+      <h1 className="title">GAME OVER</h1>
+
+      <div className="menu flex-v">
+        <div>
+          <div className="winner-name">{ winner?.name }</div>
+          { winner ? ' won the round!' : 'Game over' }
+        </div>
+
+        {restartButton}
+      </div>
     </div>
   );
 };

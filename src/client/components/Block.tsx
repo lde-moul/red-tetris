@@ -12,8 +12,14 @@ interface BlockProps {
 const blockClasses = [
   'empty-block',
   'malus-block',
-  'full-block',
+  'full-block1',
+  'full-block2',
+  'full-block3',
+  'full-block4',
+  'full-block5',
+  'full-block6',
+  'full-block7',
 ];
 
 export default ({ type }: BlockProps) =>
-  <div className={blockClasses[type]}></div>;
+  <div className={'block ' + blockClasses[type]}></div>;

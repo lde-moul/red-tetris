@@ -1,6 +1,6 @@
 'use strict';
 
-import Board, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty, isPositionInsideBoard } from "./Board";
+import Board, { attachPieceToBoard, BlockType, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty, isPositionInsideBoard } from "./Board";
 import Player from "./LocalPlayer";
 import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";
 
@@ -9,14 +9,17 @@ import { Socket } from "socket.io-client";
 export default interface Piece {
   blocks: Vector2D[];
   center: Vector2D;
+  type: BlockType;
 };
 
 export const translatePiece = (piece: Piece, offset: Vector2D): Piece => ({
+  ...piece,
   blocks: piece.blocks.map(block => add2DVectors(block, offset)),
   center: add2DVectors(piece.center, offset)
 });
 
 export const rotatePiece = (piece: Piece): Piece => ({
+  ...piece,
   blocks: piece.blocks.map(block => rotatePoint(block, piece.center)),
   center: piece.center
 });

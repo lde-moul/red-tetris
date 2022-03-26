@@ -2,6 +2,8 @@
 
 import RoomCreation from './RoomCreation';
 import { useTracked } from '../state';
+import "../../../styles.css";
+import Title from './Title';
 
 import React from 'react';
 
@@ -20,10 +22,18 @@ export default () => {
     </li>
   );
 
+  const roomSelection = (rooms.length != 0) ?
+    <ul className="flex-v">{rooms}</ul> :
+    'No rooms available.';
+
   return (
-    <div>
-      <ul>{rooms}</ul>
-      <RoomCreation />
+    <div className="flex-v">
+      <Title />
+
+      <div className="menu flex-v">
+        {roomSelection}
+        <RoomCreation />
+      </div>
     </div>
   );
 }

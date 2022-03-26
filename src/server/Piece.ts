@@ -1,16 +1,19 @@
 'use strict';
 
+import { BlockType } from "./Board";
 import Player from "./Player";
 import Vector2D from "./Vector2D";
 
 export default class Piece {
   blocks: Vector2D[];
   center: Vector2D;
+  type: BlockType;
   player: Player;
 
-  constructor(blocks: Vector2D[], center: Vector2D, player: Player = null) {
+  constructor(blocks: Vector2D[], center: Vector2D, type: BlockType, player: Player = null) {
     this.blocks = blocks;
     this.center = center;
+    this.type = type;
     this.player = player;
   }
 
@@ -18,6 +21,7 @@ export default class Piece {
     return new Piece(
       this.blocks.map(block => block.clone()),
       this.center.clone(),
+      this.type,
       this.player
     );
   }

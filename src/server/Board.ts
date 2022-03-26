@@ -6,7 +6,13 @@ import Vector2D from "./Vector2D";
 export enum BlockType {
   Empty,
   Malus,
-  Filled
+  Filled1,
+  Filled2,
+  Filled3,
+  Filled4,
+  Filled5,
+  Filled6,
+  Filled7
 }
 
 export default class {
@@ -47,11 +53,11 @@ export default class {
 
   attachPiece(piece: Piece) {
     for (const block of piece.blocks)
-      this.setBlock(block, BlockType.Filled);
+      this.setBlock(block, piece.type);
   }
 
   isLineFull(y: number): boolean {
-    return this.blocks[y].every(type => type == BlockType.Filled);
+    return this.blocks[y].every(type => type >= BlockType.Filled1);
   }
 
   moveLine(oldY: number, newY: number, blockType: BlockType) {

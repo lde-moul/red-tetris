@@ -1,5 +1,79 @@
+* {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
 body {
   margin: 0px;
+  background: rgb(32, 32, 36);
+}
+
+button {
+  height: 2rem;
+  background: darkred;
+  border-width: 0.2rem;
+  border-color: brown;
+}
+
+input {
+  height: 2rem;
+  background: white;
+  border-width: 0.2rem;
+  border-color: brown;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.flex-v {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-center-h {
+  text-align: center;
+}
+
+.title {
+  color: red;
+  font-size: 10vh;
+  font-family: sans-serif;
+  text-shadow: 0vh 0vh 1vh red, 0vh 1vh darkred, 0vh 2vh 1vh black;
+
+  margin-bottom: 30vh;
+}
+
+.menu {
+  min-width: 15rem;
+  padding: 3rem 6rem;
+  background: darkred;
+  border: 1.5rem outset red;
+  border-radius: 4rem;
+}
+
+form > * {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0.1rem 0rem;
+}
+
+.menu-sep {
+  margin-top: 1rem;
+}
+
+.player-list {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+}
+
+.winner-name {
+  display: inline;
+  font-weight: bolder;
+  text-shadow: 0em 0em 0.5em palegoldenrod;
+  color: palegoldenrod;
 }
 
 .game {
@@ -39,19 +113,53 @@ body {
   }
 }
 
+.block {
+  border: 1vmin outset
+}
+
 .empty-block {
-  background: lightgrey;
-  border: 1vmin outset lightgrey;
+  background: #777;
+  border-color: #999;
 }
 
 .malus-block {
   background: grey;
-  border: 1vmin outset grey;
+  border-color: grey;
 }
 
-.full-block {
-  background: orangered;
-  border: 1vmin outset orangered;
+.full-block1 {
+  background: #921;
+  border-color: #B21;
+}
+
+.full-block2 {
+  background: #D00;
+  border-color: #F00;
+}
+
+.full-block3 {
+  background: #621;
+  border-color: #821;
+}
+
+.full-block4 {
+  background: #D70;
+  border-color: #F80;
+}
+
+.full-block5 {
+  background: #944;
+  border-color: #B44;
+}
+
+.full-block6 {
+  background: #738;
+  border-color: #938;
+}
+
+.full-block7 {
+  background: #D96;
+  border-color: #FA6;
 }
 
 .game-local-player-info {
@@ -155,7 +263,7 @@ body {
 .spectrum {
   width: 100%;
   height: 80%;
-  background: lightgrey;
+  background: #777;
 
   display: flex;
   align-items: flex-end;

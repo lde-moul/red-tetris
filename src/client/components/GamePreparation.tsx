@@ -1,6 +1,7 @@
 'use strict';
 
 import { useTracked } from '../state';
+import Title from './Title';
 
 import React from 'react';
 
@@ -26,19 +27,30 @@ export default () => {
       </button>
     );
 
-    return <li>{name}{hostMark}{changeHostButton}</li>;
+    return [
+      <div>{name}</div>,
+      <div>{hostMark}</div>,
+      <div>{changeHostButton}</div>
+    ];
   });
 
   const startButton = (state.playerName !== state.room.hostName) ? null : (
-    <button type="button" onClick={() => handleStart()}>
+    <button type="button" onClick={() => handleStart()} className="menu-sep">
       Start
     </button>
   );
 
   return (
-    <div>
-      <ul>{playerList}</ul>
-      {startButton}
+    <div className="flex-v">
+      <Title />
+
+      <div className="menu flex-v">
+        <div className="player-list">
+          {playerList}
+        </div>
+
+        {startButton}
+      </div>
     </div>
   );
 };

@@ -9,7 +9,8 @@ import assert from 'assert';
 describe('Piece', function() {
   const getShape = (id: number): Piece => ({
     blocks: shapes[id].blocks,
-    center: shapes[id].center
+    center: shapes[id].center,
+    type: shapes[id].type
   });
 
   it('should move the piece down by 3 blocks', () => {

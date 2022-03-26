@@ -2,6 +2,7 @@
 
 import { useTracked } from '../state';
 import "../../../styles.css";
+import Title from './Title';
 
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -44,12 +45,12 @@ export default () => {
   const namePattern = "[\\w +*/%^()=<>:,;.!?'&quot;~@#$&-]+";
 
   return (
-    <div>
-      <h1>Red Tetris</h1>
+    <div className="flex-v">
+      <Title />
 
-      <form onSubmit={handleSubmit}>
-        <label>Player name:</label>
-        <input ref={nameInputRef} type="text" required pattern={namePattern} minLength={1} maxLength={20} value={name} onChange={handleNameChange} onInvalid={handleInvalidName} />
+      <form onSubmit={handleSubmit} className="menu flex-v">
+        <label className="text-center-h">Player name</label>
+        <input ref={nameInputRef} type="text" required pattern={namePattern} minLength={1} maxLength={20} value={name} onChange={handleNameChange} onInvalid={handleInvalidName} className="text-center-h" />
         <button type="submit">
           Play
         </button>

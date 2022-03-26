@@ -10,7 +10,7 @@ const getTestBoard = (blocks: number[][], numMalusLines: number = 0): Board => {
   let board = getEmptyBoard({ x: 10, y: 20 });
   blocks.forEach(arrayPos => {
     const pos = { x: arrayPos[0], y: 20 - 1 - arrayPos[1] };
-    const type = pos.y < 20 - numMalusLines ? BlockType.Filled : BlockType.Malus;
+    const type = pos.y < 20 - numMalusLines ? BlockType.Filled1 : BlockType.Malus;
     board = setBoardBlock(board, pos, type);
   });
   return board;
@@ -30,10 +30,10 @@ describe('Board', function() {
 
   it('should fill and then unfill 4 blocks on the board when a T piece is attached to and then detached from it', () => {
     const expected = produce(getEmptyBoard({ x: 10, y: 20 }), prev => {
-      prev.blocks[0][1] = BlockType.Filled;
-      prev.blocks[1][0] = BlockType.Filled;
-      prev.blocks[1][1] = BlockType.Filled;
-      prev.blocks[1][2] = BlockType.Filled;
+      prev.blocks[0][1] = BlockType.Filled1;
+      prev.blocks[1][0] = BlockType.Filled1;
+      prev.blocks[1][1] = BlockType.Filled1;
+      prev.blocks[1][2] = BlockType.Filled1;
     });
 
     let board = attachPieceToBoard(shapes[5], getEmptyBoard({ x: 10, y: 20 }));

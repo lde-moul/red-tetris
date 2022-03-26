@@ -6,7 +6,13 @@ import Vector2D, { floor2DVector } from "./Vector2D";
 export enum BlockType {
   Empty,
   Malus,
-  Filled
+  Filled1,
+  Filled2,
+  Filled3,
+  Filled4,
+  Filled5,
+  Filled6,
+  Filled7
 }
 
 export default interface Board {
@@ -56,7 +62,7 @@ export const setBoardBlock = (board: Board, pos: Vector2D, type: BlockType): Boa
 
 const attachOrDetach = (piece: Piece, board: Board, attaching: boolean): Board =>
   piece.blocks.reduce(
-    (board, block) => setBoardBlock(board, block, attaching ? BlockType.Filled : BlockType.Empty),
+    (board, block) => setBoardBlock(board, block, attaching ? piece.type : BlockType.Empty),
     board
   );
 
@@ -67,7 +73,7 @@ export const detachPieceFromBoard = (piece: Piece, board: Board): Board =>
   attachOrDetach(piece, board, false);
 
 const isLineFull = (line: BlockType[]): boolean =>
-  line.every(block => block == BlockType.Filled);
+  line.every(block => block >= BlockType.Filled1);
 
 export const clearFullLines = (board: Board): Board => {
   let remainingLines = board.blocks.filter(line => !isLineFull(line));

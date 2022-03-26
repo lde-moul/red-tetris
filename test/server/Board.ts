@@ -9,7 +9,7 @@ const getTestBoard = (blocks: number[][], numMalusLines: number = 0): Board => {
   const board = new Board(new Vector2D(10, 20));
   for (const arrayPos of blocks) {
     const pos = new Vector2D(arrayPos[0], 20 - 1 - arrayPos[1]);
-    const type = pos.y < 20 - numMalusLines ? BlockType.Filled : BlockType.Malus;
+    const type = pos.y < 20 - numMalusLines ? BlockType.Filled1 : BlockType.Malus;
     board.setBlock(pos, type);
   }
   return board;
