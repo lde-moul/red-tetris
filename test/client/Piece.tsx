@@ -1,6 +1,6 @@
 'use strict';
 
-import { attachPieceToBoard, getEmptyBoard } from '../../src/client/Board';
+import { attachPieceToBoard, BlockType, getEmptyBoard } from '../../src/client/Board';
 import Piece, { canPieceBeHere, rotatePiece, translatePiece } from '../../src/client/Piece';
 import shapes from '../../src/server/shapes';
 
@@ -14,14 +14,15 @@ describe('Piece', function() {
   });
 
   it('should move the piece down by 3 blocks', () => {
-    const expected = {
+    const expected: Piece = {
       blocks: [
         { x: 0.5, y: 3.5 },
         { x: 0.5, y: 4.5 },
         { x: 1.5, y: 4.5 },
         { x: 2.5, y: 4.5 },
       ],
-      center: { x: 1.5, y: 4.5 }
+      center: { x: 1.5, y: 4.5 },
+      type: BlockType.Filled2
     };
 
     const movedPiece = translatePiece(getShape(1), { x: 0, y: 3 });

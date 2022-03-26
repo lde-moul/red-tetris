@@ -20,7 +20,7 @@ describe('Board', function() {
   it('should return a 10x20 empty board', () => {
     const e = BlockType.Empty;
     const l = [e, e, e, e, e, e, e, e, e, e];
-    const expected = {
+    const expected: Board = {
       blocks: [l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l],
       size: { x: 10, y: 20 }
     };
@@ -30,10 +30,10 @@ describe('Board', function() {
 
   it('should fill and then unfill 4 blocks on the board when a T piece is attached to and then detached from it', () => {
     const expected = produce(getEmptyBoard({ x: 10, y: 20 }), prev => {
-      prev.blocks[0][1] = BlockType.Filled1;
-      prev.blocks[1][0] = BlockType.Filled1;
-      prev.blocks[1][1] = BlockType.Filled1;
-      prev.blocks[1][2] = BlockType.Filled1;
+      prev.blocks[0][1] = BlockType.Filled6;
+      prev.blocks[1][0] = BlockType.Filled6;
+      prev.blocks[1][1] = BlockType.Filled6;
+      prev.blocks[1][2] = BlockType.Filled6;
     });
 
     let board = attachPieceToBoard(shapes[5], getEmptyBoard({ x: 10, y: 20 }));
