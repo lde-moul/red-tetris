@@ -11,12 +11,12 @@ export default interface Player {
 };
 
 export const isPositionInsideBoard = (pos: Vector2D) =>
-  pos.x >= 0 && pos.x < 10 && pos.y >= 0 && pos.y < 20;
+  pos.x >= 0 && pos.x < 10 && pos.y >= 0 && pos.y < 20 + 4;
 
 export const getEmptyBoard = () => {
   let board: boolean[][] = [];
 
-  for (let y = 0; y < 20; y++) {
+  for (let y = 0; y < 20 + 4; y++) {
     board[y] = [];
     for (let x = 0; x < 10; x++) {
       board[y][x] = false;
@@ -25,6 +25,14 @@ export const getEmptyBoard = () => {
 
   return board;
 };
+
+export const isBoardBlockFilled = (board: boolean[][], pos: Vector2D): boolean => {
+  pos = floor2DVector(pos);
+  return !isPositionInsideBoard(pos) || board[pos.y][pos.x];
+};
+
+export const isBoardBlockEmpty = (board: boolean[][], pos: Vector2D): boolean =>
+  !isBoardBlockFilled(board, pos);
 
 export const setBoardBlock = (board: boolean[][], pos: Vector2D, filled: boolean) => {
   pos = floor2DVector(pos);

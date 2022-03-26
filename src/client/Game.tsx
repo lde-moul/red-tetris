@@ -1,7 +1,7 @@
 'use strict';
 
 import Block from './Block';
-import { rotatePiece, translatePiece } from './Piece';
+import { canPieceBeHere, rotatePiece, translatePiece } from './Piece';
 import { attachPieceToBoard, detachPieceFromBoard } from './Player';
 import { useTracked } from './state';
 import '../../styles.css';
@@ -18,7 +18,11 @@ export default () => {
         const player = draft.room.players.find(player => player.name == draft.playerName);
 
         player.board = detachPieceFromBoard(player.piece, player.board);
-        player.piece = translatePiece(player.piece, { x: 0, y: 1 });
+
+        const movedPiece = translatePiece(player.piece, { x: 0, y: 1 });
+        if (canPieceBeHere(movedPiece, player.board))
+          player.piece = movedPiece;
+
         player.board = attachPieceToBoard(player.piece, player.board);
       }));
     }
@@ -27,7 +31,11 @@ export default () => {
         const player = draft.room.players.find(player => player.name == draft.playerName);
 
         player.board = detachPieceFromBoard(player.piece, player.board);
-        player.piece = translatePiece(player.piece, { x: -1, y: 0 });
+
+        const movedPiece = translatePiece(player.piece, { x: -1, y: 0 });
+        if (canPieceBeHere(movedPiece, player.board))
+          player.piece = movedPiece;
+
         player.board = attachPieceToBoard(player.piece, player.board);
       }));
     } else if (event.key == 'ArrowRight') {
@@ -35,7 +43,11 @@ export default () => {
         const player = draft.room.players.find(player => player.name == draft.playerName);
 
         player.board = detachPieceFromBoard(player.piece, player.board);
-        player.piece = translatePiece(player.piece, { x: 1, y: 0 });
+
+        const movedPiece = translatePiece(player.piece, { x: 1, y: 0 });
+        if (canPieceBeHere(movedPiece, player.board))
+          player.piece = movedPiece;
+
         player.board = attachPieceToBoard(player.piece, player.board);
       }));
     }
@@ -44,7 +56,11 @@ export default () => {
         const player = draft.room.players.find(player => player.name == draft.playerName);
 
         player.board = detachPieceFromBoard(player.piece, player.board);
-        player.piece = rotatePiece(player.piece);
+
+        const rotatedPiece = rotatePiece(player.piece);
+        if (canPieceBeHere(rotatedPiece, player.board))
+          player.piece = rotatedPiece;
+
         player.board = attachPieceToBoard(player.piece, player.board);
       }));
     }
@@ -61,7 +77,7 @@ export default () => {
   const player = state.room.players.find(player => player.name == state.playerName);
 
   let board = [];
-  for (const line of player.board)
+  for (const line of player.board.slice(4))
     for (const filled of line)
       board.push(<Block filled={filled} />);
 

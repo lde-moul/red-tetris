@@ -7,9 +7,9 @@ import shapes from '../../src/server/shapes';
 import assert from 'assert';
 
 describe('Board', function() {
-  it('should return a 10x20 empty board', () => {
+  it('should return a 10x24 empty board', () => {
     const l = [false, false, false, false, false, false, false, false, false, false];
-    const expected = [l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l];
+    const expected = [l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l];
 
     assert.deepStrictEqual(getEmptyBoard(), expected);
   });

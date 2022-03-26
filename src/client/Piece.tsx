@@ -1,6 +1,6 @@
 'use strict';
 
-import Player from "./Player";
+import Player, { isBoardBlockEmpty } from "./Player";
 import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";
 
 export default interface Piece {
@@ -17,6 +17,9 @@ export const rotatePiece = (piece: Piece): Piece => ({
   blocks: piece.blocks.map(block => rotatePoint(block, piece.center)),
   center: piece.center
 });
+
+export const canPieceBeHere = (piece: Piece, board: boolean[][]): boolean =>
+  piece.blocks.every(block => isBoardBlockEmpty(board, block));
 
 export const spawnNextPiece = (player: Player) =>
   {
