@@ -13,8 +13,10 @@ import React, { useEffect } from 'react';
 export default () => {
   const [state, setState] = useTracked();
 
-  const handleKeyDown = (event: KeyboardEvent) =>
-    setState(prev => handleGameKeyDown(event, prev));
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!event.repeat)
+      setState(prev => handleGameKeyDown(event, prev));
+  };
 
   const handleTick = () =>
     setState(prev => handleGameTick(prev));
