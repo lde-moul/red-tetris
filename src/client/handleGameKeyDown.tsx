@@ -7,7 +7,9 @@ import { State } from './state';
 import produce from 'immer';
 
 export default (event: KeyboardEvent, state: State): State => {
-  if (event.key == 'ArrowDown') {
+  switch (event.key)
+  {
+  case 'ArrowDown':
     return produce(state, draft => {
       const player = draft.room.players.find(player => player.name == draft.playerName);
 
@@ -19,8 +21,7 @@ export default (event: KeyboardEvent, state: State): State => {
 
       player.board = attachPieceToBoard(player.piece, player.board);
     });
-  }
-  else if (event.key == 'ArrowLeft') {
+  case 'ArrowLeft':
     return produce(state, draft => {
       const player = draft.room.players.find(player => player.name == draft.playerName);
 
@@ -32,7 +33,7 @@ export default (event: KeyboardEvent, state: State): State => {
 
       player.board = attachPieceToBoard(player.piece, player.board);
     });
-  } else if (event.key == 'ArrowRight') {
+  case 'ArrowRight':
     return produce(state, draft => {
       const player = draft.room.players.find(player => player.name == draft.playerName);
 
@@ -44,8 +45,7 @@ export default (event: KeyboardEvent, state: State): State => {
 
       player.board = attachPieceToBoard(player.piece, player.board);
     });
-  }
-  else if (event.key == 'ArrowUp') {
+  case 'ArrowUp':
     return produce(state, draft => {
       const player = draft.room.players.find(player => player.name == draft.playerName);
 
