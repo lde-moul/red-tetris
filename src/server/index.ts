@@ -61,7 +61,7 @@ io.on('connection', (socket: Socket) => {
   socket.on('JoinRoom', (name: string) => {
     let room = rooms.find(room => room.name == name);
 
-    if (!room)
+    if (!room || player.room)
       return;
 
     room.emitState(player);
