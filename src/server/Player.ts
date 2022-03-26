@@ -10,6 +10,7 @@ export default class {
   name: string;
   room?: Room;
   piece?: Piece;
+  pieceId?: number;
   pieceQueueId?: number;
 
   constructor(socket: Socket) {
@@ -24,5 +25,8 @@ export default class {
 
     const piece = this.room.getPieceFromQueue(this.pieceQueueId);
     this.socket.emit('NextPiece', piece);
+  }
+
+  spawnNextPiece() {
   }
 }
