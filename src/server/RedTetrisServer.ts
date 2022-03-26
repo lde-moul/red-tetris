@@ -87,6 +87,8 @@ export default class RedTetrisServer {
     socket.on('MovePiece', offset => this.handleMovePiece(player, offset));
     socket.on('RotatePiece', () => this.handleRotatePiece(player));
     socket.on('DropPiece', () => this.handleDropPiece(player));
+
+    player.socket.emit('RoomNames', this.rooms.map(room => room.name));
   }
 
   handleDisconnect(player: Player) {
@@ -112,7 +114,6 @@ export default class RedTetrisServer {
     player.name = name;
 
     player.socket.emit('PlayerCreated', name);
-    player.socket.emit('RoomNames', this.rooms.map(room => room.name));
   }
 
   handleJoinRoom(player: Player, name: string) {

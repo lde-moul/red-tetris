@@ -10,12 +10,14 @@ export interface State {
   playerName: string;
   room?: Room;
   roomNames: string[];
+  quickPlayerName?: string;
+  quickRoomName?: string;
 }
 
 export type StateSetter = (setter: (prev: State) => State) => void;
 
 export const initialState: State = {
-  pageId: 'PlayerCreation',
+  pageId: 'Initialization',
   playerName: 'Player',
   roomNames: [],
 };

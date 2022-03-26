@@ -1,11 +1,13 @@
 'use strict';
 
 import useSocket from '../socket';
+import { useTracked } from '../state';
 
 import React, { useEffect, useRef, useState } from 'react';
 
 export default () => {
-  const [name, setName] = useState('Room name');
+  const [state, setState] = useTracked();
+  const [name, setName] = useState(state.quickRoomName ?? 'Room name');
   const nameInputRef = useRef<HTMLInputElement>(null);
   const socket = useSocket();
 
@@ -29,6 +31,9 @@ export default () => {
   }
 
   useEffect(() => {
+    if (state.quickRoomName && !state.roomNames.includes(state.quickRoomName) && nameInputRef.current.reportValidity())
+      socket.emit('CreateRoom', state.quickRoomName);
+
     socket.on('RoomNameExists', () => {
       const nameInput = nameInputRef.current;
       nameInput.setCustomValidity('This name is already taken.');

@@ -6,7 +6,7 @@ import { useTracked } from '../state';
 import "../../../styles.css";
 import Title from './Title';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default () => {
   const [state, setState] = useTracked();
@@ -15,6 +15,11 @@ export default () => {
   const handleJoin = (name: string) => {
     socket.emit('JoinRoom', name);
   }
+
+  useEffect(() => {
+    if (state.quickRoomName && state.roomNames.includes(state.quickRoomName))
+      socket.emit('JoinRoom', state.quickRoomName);
+  }, []);
 
   const rooms = state.roomNames.map(name =>
     <li>

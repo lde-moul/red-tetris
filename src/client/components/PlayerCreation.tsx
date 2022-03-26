@@ -1,13 +1,15 @@
 'use strict';
 
 import useSocket from '../socket';
+import { useTracked } from '../state';
 import "../../../styles.css";
 import Title from './Title';
 
 import React, { useEffect, useRef, useState } from 'react';
 
 export default () => {
-  const [name, setName] = useState('Player name');
+  const [state, setState] = useTracked();
+  const [name, setName] = useState(state.quickPlayerName ?? 'Player name');
   const nameInputRef = useRef<HTMLInputElement>(null);
   const socket = useSocket();
 
@@ -31,6 +33,9 @@ export default () => {
   }
 
   useEffect(() => {
+    if (state.quickPlayerName && nameInputRef.current.reportValidity())
+      socket.emit('CreatePlayer', name);
+
     socket.on('PlayerNameExists', () => {
       const nameInput = nameInputRef.current;
       nameInput.setCustomValidity('This name is already taken.');

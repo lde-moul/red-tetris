@@ -4,6 +4,7 @@ import Game from './Game';
 import GameJoining from './GameJoining';
 import GamePreparation from './GamePreparation';
 import GameResults from './GameResults';
+import Initialization from './Initialization';
 import initializeSocket from '../initializeSocket';
 import PlayerCreation from './PlayerCreation';
 import RoomSelection from './RoomSelection';
@@ -17,6 +18,7 @@ interface AppProps {
 };
 
 const pages = {
+  Initialization,
   PlayerCreation,
   RoomSelection,
   GamePreparation,
