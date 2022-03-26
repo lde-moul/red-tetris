@@ -44,6 +44,11 @@ body {
   border: 1vmin outset lightgrey;
 }
 
+.malus-block {
+  background: grey;
+  border: 1vmin outset grey;
+}
+
 .full-block {
   background: orangered;
   border: 1vmin outset orangered;
