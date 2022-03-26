@@ -5,6 +5,7 @@ import { getEmptyBoard } from '../../src/client/Player';
 import shapes from '../../src/server/shapes';
 
 import assert from 'assert';
+import produce from 'immer';
 
 describe('Board', function() {
   it('should return a 10x24 empty board', () => {
@@ -15,11 +16,13 @@ describe('Board', function() {
   });
 
   it('should fill and then unfill 4 blocks on the board when a T piece is attached to and then detached from it', () => {
-    const expected = getEmptyBoard();
-    expected[0][1] = true;
-    expected[1][0] = true;
-    expected[1][1] = true;
-    expected[1][2] = true;
+    const expected = produce(getEmptyBoard(), prev => {
+      prev[0][1] = true;
+      prev[1][0] = true;
+      prev[1][1] = true;
+      prev[1][2] = true;
+      prev = [...prev];
+    });
 
     let board = attachPieceToBoard(shapes[5], getEmptyBoard());
     assert.deepStrictEqual(board, expected);
