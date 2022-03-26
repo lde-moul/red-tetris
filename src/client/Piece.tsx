@@ -1,12 +1,17 @@
  'use strict';
 
 import Player from "./Player";
-import Vector2D from "./Vector2D";
+import Vector2D, { add2DVectors } from "./Vector2D";
 
 export default interface Piece {
   blocks: Vector2D[];
   center: Vector2D;
 };
+
+export const translatePiece = (piece: Piece, offset: Vector2D) => ({
+  blocks: piece.blocks.map(block => add2DVectors(block, offset)),
+  center: add2DVectors(piece.center, offset)
+});
 
 export const spawnNextPiece = (player: Player) =>
   {
