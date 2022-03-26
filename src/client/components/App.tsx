@@ -10,30 +10,20 @@ import { useTracked } from '../state';
 
 import React from 'react';
 
+const pages = {
+  PlayerCreation,
+  RoomSelection,
+  GamePreparation,
+  Game,
+  GameResults,
+};
+
 export default () => {
   const [state, setState] = useTracked();
 
   if (!state.socket)
     initializeSocket(state, setState);
 
-  let Page;
-  switch (state.pageId) {
-    case 'PlayerCreation':
-      Page = PlayerCreation;
-      break;
-    case 'RoomSelection':
-      Page = RoomSelection;
-      break;
-    case 'GamePreparation':
-      Page = GamePreparation;
-      break;
-    case 'Game':
-      Page = Game;
-      break;
-    case 'GameResults':
-      Page = GameResults;
-      break;
-  }
-
+  const Page = pages[state.pageId];
   return <Page />;
 };
