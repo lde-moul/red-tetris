@@ -74,6 +74,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
       draft.room.player. downPressTick = null;
 
       draft.room.players.forEach(player => {
+        player.lost = false;
         player.spectrum = new Array(10).fill(0);
       });
     }));
