@@ -34,8 +34,12 @@ io.on('connection', (socket: Socket) => {
   players.push(player);
 
   socket.on('disconnect', () => {
-    if (player.room)
-      player.room.removePlayer(player);
+    const room = player.room;
+    if (room) {
+      room.removePlayer(player);
+      if (room.players.length === 0)
+        rooms.splice(rooms.indexOf(room), 1);
+    }
 
     players.splice(players.indexOf(player), 1);
   })
@@ -61,7 +65,12 @@ io.on('connection', (socket: Socket) => {
     if (!player.room)
       return;
 
-    player.room.removePlayer(player);
+    const room = player.room;
+    if (room) {
+      room.removePlayer(player);
+      if (room.players.length === 0)
+        rooms.splice(rooms.indexOf(room), 1);
+    }
   });
 
   socket.on('CreateRoom', (name: string) => {
