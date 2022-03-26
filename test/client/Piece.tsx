@@ -44,17 +44,17 @@ describe('Piece', function() {
   });
 
   it("should make the piece collide when it's inside the board", () => {
-    assert(canPieceBeHere(getShape(3), getEmptyBoard()));
+    assert(canPieceBeHere(getShape(3), getEmptyBoard({ x: 10, y: 20 })));
   });
 
   it("should make the piece collide when it's is outside the board", () => {
     const piece = translatePiece(getShape(3), { x: -1, y: 0 });
-    assert(!canPieceBeHere(piece, getEmptyBoard()));
+    assert(!canPieceBeHere(piece, getEmptyBoard({ x: 10, y: 20 })));
   });
 
   it("should make the piece collide if the board contains filled blocks at its position", () => {
     const piece = getShape(3);
-    const board = attachPieceToBoard(piece, getEmptyBoard());
+    const board = attachPieceToBoard(piece, getEmptyBoard({ x: 10, y: 20 }));
     assert(!canPieceBeHere(piece, board));
   });
 });

@@ -5,25 +5,27 @@ import Vector2D from "./Vector2D";
 
 export default class {
   blocks: boolean[][];
+  size: Vector2D;
 
-  constructor() {
+  constructor(size: Vector2D) {
     this.blocks = [];
+    this.size = size;
 
-    for (let y = 0; y < 20; y++) {
+    for (let y = 0; y < this.size.y; y++) {
       this.blocks[y] = [];
-      for (let x = 0; x < 10; x++) {
+      for (let x = 0; x < this.size.x; x++) {
         this.blocks[y][x] = false;
       }
     }
   }
 
   isPositionInside (pos: Vector2D): boolean {
-    return pos.x >= 0 && pos.x < 10 && pos.y >= 0 && pos.y < 20;
+    return pos.x >= 0 && pos.x < this.size.x && pos.y >= 0 && pos.y < this.size.y;
   }
 
   isBlockFilled (pos: Vector2D): boolean {
     pos = pos.floor();
-    return pos.x < 0 || pos.x >= 10 || pos.y >= 20 || (this.isPositionInside(pos) && this.blocks[pos.y][pos.x]);
+    return pos.x < 0 || pos.x >= this.size.x || pos.y >= this.size.y || (this.isPositionInside(pos) && this.blocks[pos.y][pos.x]);
   };
 
   isBlockEmpty(pos: Vector2D): boolean {
@@ -71,8 +73,8 @@ export default class {
 
   getSpectrum(): number[] {
     let spectrum = [];
-    for (let x = 0; x < 10; x++)
-      spectrum[x] = 20 - this.getHighestBlockInColumn(x);
+    for (let x = 0; x < this.size.x; x++)
+      spectrum[x] = this.size.y - this.getHighestBlockInColumn(x);
     return spectrum;
   }
 }

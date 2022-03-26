@@ -49,7 +49,7 @@ export default class {
     this.pieceQueue = [];
 
     for (const player of this.players) {
-      player.board = new Board();
+      player.board = new Board(new Vector2D(10, 20));
 
       player.piece = null;
       player.pieceId = null;

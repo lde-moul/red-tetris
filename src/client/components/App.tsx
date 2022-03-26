@@ -62,7 +62,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'Game';
 
-      draft.room.player.board = getEmptyBoard();
+      draft.room.player.board = getEmptyBoard({ x: 10, y: 20 });
       draft.room.player.pieceQueue = [];
 
       draft.room.players.forEach(player => {

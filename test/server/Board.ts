@@ -6,7 +6,7 @@ import Vector2D from '../../src/server/Vector2D';
 import assert from 'assert';
 
 const getTestBoard = (blocks: number[][]): Board => {
-  const board = new Board();
+  const board = new Board(new Vector2D(10, 20));
   for (const pos of blocks)
     board.setBlock(new Vector2D(pos[0], 20 - 1 - pos[1]), true);
   return board;
