@@ -7,9 +7,13 @@ import initializeSocket from '../initializeSocket';
 import PlayerCreation from './PlayerCreation';
 import RoomSelection from './RoomSelection';
 import useSocket, { setSocket } from '../socket';
-import { useTracked } from '../state';
+import { State, useTracked } from '../state';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+
+interface AppProps {
+  initialState?: State;
+};
 
 const pages = {
   PlayerCreation,
@@ -19,8 +23,13 @@ const pages = {
   GameResults,
 };
 
-export default () => {
+export default ({ initialState }: AppProps) => {
   const [state, setState] = useTracked();
+
+  useEffect(() => {
+    if (initialState)
+      setState(prev => ({ ...initialState }));
+  }, []);
 
   if (!useSocket())
     setSocket(initializeSocket(null, setState));
