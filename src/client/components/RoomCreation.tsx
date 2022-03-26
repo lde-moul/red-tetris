@@ -1,12 +1,10 @@
 'use strict';
 
 import useSocket from '../socket';
-import { useTracked } from '../state';
 
 import React, { useEffect, useRef, useState } from 'react';
 
 export default () => {
-  const [state, setState] = useTracked();
   const [name, setName] = useState('Room name');
   const nameInputRef = useRef<HTMLInputElement>(null);
   const socket = useSocket();

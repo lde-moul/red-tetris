@@ -21,7 +21,7 @@ export default () => {
   };
 
   const playerList = names.map(name => {
-    const hostMark = (name == state.room.hostName) ? ' (host)' : null;
+    const hostMark = (name == state.room.hostName) ? '(host)' : null;
 
     const changeHostButton = !(state.playerName == state.room.hostName && name != state.playerName) ? null : (
       <button type="button" onClick={() => handleHostChange(name)}>

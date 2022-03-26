@@ -49,7 +49,7 @@ describe('Piece', function() {
     assert(canPieceBeHere(getShape(3), getEmptyBoard({ x: 10, y: 20 })));
   });
 
-  it("should make the piece collide when it's is outside the board", () => {
+  it("should make the piece collide when it's outside the board", () => {
     const piece = translatePiece(getShape(3), { x: -1, y: 0 });
     assert(!canPieceBeHere(piece, getEmptyBoard({ x: 10, y: 20 })));
   });

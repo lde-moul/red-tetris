@@ -28,7 +28,7 @@ export default () => {
 
       <div className="menu flex-v">
         <div>
-          <div className="winner-name">{ winner?.name }</div>
+          <span className="winner-name">{ winner?.name }</span>
           { winner ? ' won the round!' : 'Game over' }
         </div>
 
