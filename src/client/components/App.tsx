@@ -1,10 +1,10 @@
 'use strict';
 
+import { addMalusLines, getEmptyBoard } from '../Board';
 import Game from './Game';
 import GamePreparation from './GamePreparation';
 import GameResults from './GameResults';
-import { getEmptyBoard } from '../Board';
-import Piece, { spawnNextPiece } from '../Piece';
+import Piece, { spawnNextPiece, translatePiece } from '../Piece';
 import PlayerCreation from './PlayerCreation';
 import Room from '../Room';
 import RoomSelection from './RoomSelection';
@@ -100,13 +100,22 @@ const initializeSocket = (state: State, setState: StateSetter) => {
     }));
   });
 
+  state.socket.on('AddMalusLines', (numLines: number) => {
+    setState(prev => produce(prev, draft => {
+      draft.room.player.board = addMalusLines(draft.room.player.board, numLines);
+
+      if (draft.room.player.piece)
+        draft.room.player.piece = translatePiece(draft.room.player.piece, { x: 0, y: -numLines });
+    }));
+  });
+
   state.socket.on('Spectrum', (name: string, spectrum: number[]) => {
     setState(prev => produce(prev, draft => {
       if (!draft.room)
         return;
 
-      const player = draft.room.players.find(player => player.name === name);
-      player.spectrum = spectrum;
+        const player = draft.room.players.find(player => player.name === name);
+        player.spectrum = spectrum;
     }));
   });
 

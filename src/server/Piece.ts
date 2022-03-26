@@ -51,7 +51,15 @@ export default class Piece {
     if (this.isOverflowing())
       this.player.lose();
     else {
-      board.clearFullLines();
+      const numMalusLines = board.clearFullLines() - 1;
+
+      if (numMalusLines > 0) {
+        for (const opponent of this.player.room.players)
+          if (opponent != this.player && opponent.board) {
+            opponent.board.addMalusLines(numMalusLines);
+            opponent.socket.emit('AddMalusLines', numMalusLines);
+          }
+      }
     }
 
     for (const receiver of this.player.room.players)
