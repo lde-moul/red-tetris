@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 import Player from "./Player";
 import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";

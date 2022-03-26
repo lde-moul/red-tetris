@@ -13,7 +13,7 @@ export default () => {
 
   const handleStart = () => {
     state.socket.emit('StartGame');
-  }
+  };
 
   return (
     <div>

@@ -5,6 +5,7 @@ import GamePreparation from './GamePreparation';
 import { getEmptyBoard } from './Player';
 import Piece, { spawnNextPiece } from './Piece';
 import PlayerCreation from './PlayerCreation';
+import Room from './Room';
 import RoomSelection from './RoomSelection';
 import { State, StateSetter, useTracked, Provider } from './state';
 
@@ -48,7 +49,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
     }));
   });
 
-  state.socket.on('RoomState', (room) => {
+  state.socket.on('RoomState', (room: Room) => {
     setState(prev => produce(prev, draft => {
       draft.room = room;
       draft.pageId = 'GamePreparation';
