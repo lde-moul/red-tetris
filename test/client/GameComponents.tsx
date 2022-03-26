@@ -91,7 +91,8 @@ describe('Game components', function() {
       player: {
         board: testBoard,
         piece: testPiece,
-        pieceQueue: [ testPiece ]
+        pieceQueue: [ testPiece ],
+        score: 1200,
       },
       players: [
         {
@@ -122,7 +123,7 @@ describe('Game components', function() {
 
   it('should render the game HUD', () => {
     render(
-      <HUD pieceQueue={testState.room.player.pieceQueue} players={[ testState.room.players[1] ]} />
+      <HUD player={testState.room.player} players={[ testState.room.players[1] ]} />
     );
 
     const hud = document.querySelector('.hud');

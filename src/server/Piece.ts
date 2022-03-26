@@ -104,30 +104,36 @@ export default class Piece {
   }
 
   land() {
-    const board = this.player.board;
+    const player = this.player;
+    const board = player.board;
 
     board.attachPiece(this);
 
     if (this.isOverflowing())
-      this.player.lose();
+      player.lose();
     else {
-      const numMalusLines = board.clearFullLines() - 1;
+      const numLinesCleared = board.clearFullLines();
 
+      const numMalusLines = numLinesCleared - 1;
       if (numMalusLines > 0) {
-        for (const opponent of this.player.room.players)
-          if (opponent != this.player && opponent.board) {
+        for (const opponent of player.room.players)
+          if (opponent != player && opponent.board) {
             opponent.board.addMalusLines(numMalusLines);
 
             if (opponent.piece)
               opponent.piece.translate(new Vector2D(0, -numMalusLines));
 
             opponent.socket.emit('AddMalusLines', numMalusLines);
-            opponent.emitSpectrum(this.player);
+            opponent.emitSpectrum(player);
           }
       }
+
+      player.numLinesCleared += numLinesCleared;
+      player.score += [0, 40, 100, 300, 1200][numLinesCleared];
+      player.socket.emit('Stats', player.score, player.numLinesCleared);
     }
 
-    for (const receiver of this.player.room.players)
-      this.player.emitSpectrum(receiver);
+    for (const receiver of player.room.players)
+      player.emitSpectrum(receiver);
   }
 };

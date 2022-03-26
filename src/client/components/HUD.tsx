@@ -1,19 +1,20 @@
 'use strict';
 
-import Piece from '../Piece';
+import LocalPlayer from '../LocalPlayer';
+import PieceQueue from './PieceQueue';
 import Player from '../Player';
 import PlayerInfo from './PlayerInfo';
+import Stats from './Stats';
 import '../../../styles.css';
 
 import React from 'react';
-import PieceQueue from './PieceQueue';
 
 interface HUDProps {
-  pieceQueue: Piece[];
+  player: LocalPlayer;
   players: Player[];
 };
 
-export default ({ pieceQueue, players }: HUDProps) => {
+export default ({ player, players }: HUDProps) => {
   const playerInfos = players.map(player =>
     <PlayerInfo player={player} numPlayers={players.length} />
   );
@@ -21,7 +22,8 @@ export default ({ pieceQueue, players }: HUDProps) => {
   return (
     <div className="hud">
       <div className="game-local-player-info">
-        <PieceQueue pieceQueue={pieceQueue} />
+        <PieceQueue pieceQueue={player.pieceQueue} />
+        <Stats score={player.score} numLinesCleared={player.numLinesCleared} />
       </div>
       <div className="game-player-infos">
         {playerInfos}

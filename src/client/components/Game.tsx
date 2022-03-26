@@ -44,9 +44,11 @@ export default () => {
     };
   }, []);
 
-  let board = state.room.player.board;
-  if (state.room.player.piece)
-    board = attachPieceToBoard(state.room.player.piece, board);
+  const player = state.room.player;
+
+  let board = player.board;
+  if (player.piece)
+    board = attachPieceToBoard(player.piece, board);
 
   const opponents = state.room.players.filter(player => player.name !== state.playerName);
 
@@ -54,7 +56,7 @@ export default () => {
     <div className="game">
       <div className="game-padding"></div>
       <Board board={board} className="board" />
-      <HUD pieceQueue={state.room.player.pieceQueue} players={opponents} />
+      <HUD player={player} players={opponents} />
     </div>
   );
 };

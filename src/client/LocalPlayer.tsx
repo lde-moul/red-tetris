@@ -8,6 +8,8 @@ export default interface LocalPlayer {
   piece?: Piece;
   pieceQueue?: Piece[];
   fallTick?: number;
+  score?: number;
+  numLinesCleared?: number;
 
   leftPressTick? : number;
   rightPressTick?: number;
@@ -22,6 +24,8 @@ export const initialiseLocalPlayerGameVariables = (player: LocalPlayer): LocalPl
   piece: null,
   pieceQueue: [],
   fallTick: null,
+  score: 0,
+  numLinesCleared: 0,
 
   leftPressTick: null,
   rightPressTick: null,

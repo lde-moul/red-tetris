@@ -17,6 +17,8 @@ export default class {
   piece?: Piece;
   pieceId?: number;
   pieceQueueId?: number;
+  score?: number;
+  numLinesCleared?: number;
   lateness?: number;
   desynchronised?: boolean;
   resynchronising?: boolean;

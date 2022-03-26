@@ -16,6 +16,14 @@ export default () => {
 
   const winner = state.room.players.find(player => !player.lost);
 
+  const player = state.room.player;
+  const stats = (!player || player.score === undefined) ? null : (
+    <div className="menu-sep">
+      <div>Score: {player.score}</div>
+      <div>Lines: {player.numLinesCleared}</div>
+    </div>
+  );
+
   const restartButton = (state.playerName !== state.room.hostName) ? null : (
     <button type="button" onClick={() => handleRestart()} className="menu-sep">
       Restart
@@ -31,6 +39,8 @@ export default () => {
           <span className="winner-name">{ winner?.name }</span>
           { winner ? ' won the round!' : 'Game over' }
         </div>
+
+        {stats}
 
         {restartButton}
       </div>

@@ -86,6 +86,8 @@ export default class {
 
     for (const player of this.players) {
       player.lost = false;
+      player.score = 0;
+      player.numLinesCleared = 0;
       player.lateness = 0;
       player.resynchronising = false;
 
@@ -167,7 +169,9 @@ export default class {
           type: player.piece.type
         },
         pieceQueue: [],
-        fallTick: 0
+        fallTick: 0,
+        score: player.score,
+        numLinesCleared: player.numLinesCleared
       },
       players: this.players.map(player => {
         return {
