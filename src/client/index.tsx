@@ -1,17 +1,29 @@
 'use strict';
 
 import PlayerCreation from './PlayerCreation';
-import state from './state';
+import { State, StateSetter, useTracked, Provider } from './state';
 
+import produce from 'immer';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import io, { Socket } from 'socket.io-client';
 
-state.socket = io();
+function initializeSocket(state: State, setState: StateSetter)
+{
+  state.socket = io();
+
+  state.socket.on('PlayerCreated', () => {
+    setState(prev => produce(prev, draft => {
+      draft.pageId = 'RoomSelection';
+    }));
+  });
 
 function App()
 {
-  [state.pageId, state.setPageId] = useState('PlayerCreation');
+  const [state, setState] = useTracked();
+
+  if (!state.socket)
+    initializeSocket(state, setState);
 
   let Page;
   switch (state.pageId)
@@ -25,6 +37,8 @@ function App()
 }
 
 ReactDOM.render(
-  React.createElement(App),
+  <Provider>
+    <App />
+  </Provider>,
   document.getElementById('app')
 );

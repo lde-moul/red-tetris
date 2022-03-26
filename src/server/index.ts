@@ -27,18 +27,17 @@ app.get('*', (req, res) => {
 })
 
 io.on('connection', (socket: Socket) => {
-  let player = new Player();
+  let player = new Player(socket);
   players.push(player);
 
   socket.on('disconnect', () => {
     players.splice(players.indexOf(player), 1);
   })
 
-  socket.on('CreatePlayer', (name: string, ack: Function) => {
+  socket.on('CreatePlayer', (name: string) => {
     player.name = name;
 
-    if (typeof ack === 'function')
-      ack(true);
+    socket.emit('PlayerCreated');
   });
 
   });

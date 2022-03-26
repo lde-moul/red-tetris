@@ -1,23 +1,19 @@
 'use strict';
 
-import emitWithAck from './emitWithAck';
-import state from './state';
+import { useTracked } from './state';
 
+import produce from 'immer';
 import React, { useState } from 'react';
 import "../../styles.css";
 
 export default () =>
 {
+  const [state, setState] = useTracked();
   const [name, setName] = useState('Player name');
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-
-    try {
-      await emitWithAck(state.socket, 'CreatePlayer', name);
-    } catch (err) {
-      // ...
-    }
+    state.socket.emit('CreatePlayer', name);
   };
 
   const handleNameChange: React.FormEventHandler<HTMLInputElement> = (event) => {
