@@ -6,7 +6,6 @@ import "../../styles.css";
 export default ({ setPageId, socket }) =>
 {
   const [name, setName] = useState('Player name');
-  const [joining, setJoining] = useState(false);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -24,11 +23,8 @@ export default ({ setPageId, socket }) =>
       <form onSubmit={handleSubmit}>
         <label>Player name:</label>
         <input type="text" value={name} onChange={handleNameChange} />
-        <button type="submit" onClick={() => setJoining(false)}>
-          Create room
-        </button>
-        <button type="submit" onClick={() => setJoining(true)}>
-          Join room
+        <button type="submit">
+          Play
         </button>
       </form>
     </div>
