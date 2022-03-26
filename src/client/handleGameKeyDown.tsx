@@ -1,6 +1,6 @@
 'use strict';
 
-import { attachPieceToBoard, detachPieceFromBoard } from './LocalPlayer';
+import { attachPieceToBoard, detachPieceFromBoard } from './Board';
 import { canPieceBeHere, movePiece, rotatePiece } from './Piece';
 import { State } from './state';
 

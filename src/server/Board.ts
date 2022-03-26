@@ -9,7 +9,7 @@ export default class {
   constructor() {
     this.blocks = [];
 
-    for (let y = 0; y < 20 + 4; y++) {
+    for (let y = 0; y < 20; y++) {
       this.blocks[y] = [];
       for (let x = 0; x < 10; x++) {
         this.blocks[y][x] = false;
@@ -18,12 +18,12 @@ export default class {
   }
 
   isPositionInside (pos: Vector2D): boolean {
-    return pos.x >= 0 && pos.x < 10 && pos.y >= 0 && pos.y < 20 + 4;
+    return pos.x >= 0 && pos.x < 10 && pos.y >= 0 && pos.y < 20;
   }
 
   isBlockFilled (pos: Vector2D): boolean {
     pos = pos.floor();
-    return !this.isPositionInside(pos) || this.blocks[pos.y][pos.x];
+    return pos.x < 0 || pos.x >= 10 || pos.y >= 20 || (this.isPositionInside(pos) && this.blocks[pos.y][pos.x]);
   };
 
   isBlockEmpty(pos: Vector2D): boolean {
@@ -72,7 +72,7 @@ export default class {
   getSpectrum(): number[] {
     let spectrum = [];
     for (let x = 0; x < 10; x++)
-      spectrum[x] = 20 + 4 - this.getHighestBlockInColumn(x);
+      spectrum[x] = 20 - this.getHighestBlockInColumn(x);
     return spectrum;
   }
 }

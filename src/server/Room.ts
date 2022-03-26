@@ -69,7 +69,7 @@ export default class {
     const piece = shapes[shapeId].clone();
 
     const bottom = Math.max(...piece.blocks.map(block => block.y));
-    piece.translate(new Vector2D(10 / 2 - piece.center.x, 3.5 - bottom));
+    piece.translate(new Vector2D(10 / 2 - piece.center.x, -0.5 - bottom));
 
     this.pieceQueue.push(piece);
   }

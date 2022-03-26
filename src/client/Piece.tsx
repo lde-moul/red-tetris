@@ -1,6 +1,7 @@
 'use strict';
 
-import Player, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty } from "./LocalPlayer";
+import Board, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty } from "./Board";
+import Player from "./LocalPlayer";
 import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";
 
 import { Socket } from "socket.io-client";
@@ -20,7 +21,7 @@ export const rotatePiece = (piece: Piece): Piece => ({
   center: piece.center
 });
 
-export const canPieceBeHere = (piece: Piece, board: boolean[][]): boolean =>
+export const canPieceBeHere = (piece: Piece, board: Board): boolean =>
   piece.blocks.every(block => isBoardBlockEmpty(board, block));
 
 export const spawnNextPiece = (player: Player): Player => {

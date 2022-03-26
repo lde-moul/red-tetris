@@ -8,7 +8,7 @@ import assert from 'assert';
 const getTestBoard = (blocks: number[][]): Board => {
   const board = new Board();
   for (const pos of blocks)
-    board.setBlock(new Vector2D(pos[0], 20 + 4 - 1 - pos[1]), true);
+    board.setBlock(new Vector2D(pos[0], 20 - 1 - pos[1]), true);
   return board;
 }
 
