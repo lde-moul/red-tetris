@@ -1,6 +1,6 @@
 'use strict';
 
-import { useTracked } from './state';
+import { useTracked } from '../state';
 
 import React, { useState } from 'react';
 

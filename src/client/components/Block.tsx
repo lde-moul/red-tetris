@@ -1,6 +1,6 @@
 'use strict';
 
-import '../../styles.css';
+import '../../../styles.css';
 
 import React from 'react';
 

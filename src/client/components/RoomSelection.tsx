@@ -1,7 +1,7 @@
 'use strict';
 
 import RoomCreation from './RoomCreation';
-import { useTracked } from './state';
+import { useTracked } from '../state';
 
 import React from 'react';
 

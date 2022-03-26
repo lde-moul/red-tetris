@@ -1,8 +1,8 @@
 'use strict';
 
-import Player from './Player';
+import Player from '../Player';
 import PlayerList from "./PlayerList";
-import { useTracked } from './state';
+import { useTracked } from '../state';
 
 import React from 'react';
 

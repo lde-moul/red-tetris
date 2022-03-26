@@ -1,10 +1,10 @@
 'use strict';
 
 import Block from './Block';
-import { canPieceBeHere, rotatePiece, translatePiece } from './Piece';
-import { attachPieceToBoard, detachPieceFromBoard } from './Player';
-import { useTracked } from './state';
-import '../../styles.css';
+import { canPieceBeHere, rotatePiece, translatePiece } from '../Piece';
+import { attachPieceToBoard, detachPieceFromBoard } from '../Player';
+import { useTracked } from '../state';
+import '../../../styles.css';
 
 import produce from 'immer';
 import React, { useEffect } from 'react';

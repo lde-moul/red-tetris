@@ -1,7 +1,7 @@
 'use strict';
 
-import { useTracked } from './state';
-import "../../styles.css";
+import { useTracked } from '../state';
+import "../../../styles.css";
 
 import produce from 'immer';
 import React, { useState } from 'react';
