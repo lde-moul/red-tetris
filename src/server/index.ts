@@ -1,6 +1,7 @@
 'use strict';
 
 import Player from './Player';
+import Room from './Room';
 
 const express = require('express');
 const http = require('http');
@@ -13,6 +14,7 @@ const io = new Server(server);
 const port = process.env.PORT;
 
 let players: Player[] = [];
+let rooms: Room[] = [];
 
 const sendFile = (res, path) => {
   res.sendFile(path, { root: __dirname + '/../..' });
@@ -31,6 +33,9 @@ io.on('connection', (socket: Socket) => {
   players.push(player);
 
   socket.on('disconnect', () => {
+    if (player.room)
+      player.room.removePlayer(player);
+
     players.splice(players.indexOf(player), 1);
   })
 
@@ -38,8 +43,36 @@ io.on('connection', (socket: Socket) => {
     player.name = name;
 
     socket.emit('PlayerCreated');
+    socket.emit('RoomNames', rooms.map(room => room.name));
   });
 
+  socket.on('JoinRoom', (name: string) => {
+    let room = rooms.find(room => room.name == name);
+
+    if (!room)
+      return;
+
+    room.emitState(player);
+    room.addPlayer(player);
+  });
+
+  socket.on('LeaveRoom', () => {
+    if (!player.room)
+      return;
+
+    player.room.removePlayer(player);
+  });
+
+  socket.on('CreateRoom', (name: string) => {
+    let room = new Room(name);
+    rooms.push(room);
+
+    room.emitState(player);
+    room.addPlayer(player);
+    room.setHost(player);
+  });
+
+  socket.on('StartGame', () => {
   });
 });
 
