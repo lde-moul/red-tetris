@@ -1,77 +1,41 @@
 'use strict';
 
-import initializeSocket from '../src/client/initializeSocket';
-import { initialState, State } from '../src/client/state';
+import App from '../src/client/components/App';
+import useSocket, { setSocket } from "../src/client/socket";
+import { Provider, State } from '../src/client/state';
 
-import { Socket } from 'socket.io-client';
+import assert from "assert";
+import React from 'react';
+import { render } from '@testing-library/react';
 
-interface TestMessage {
-  type: string;
-  args: any[];
-};
+export const renderApp = (initialState: State) =>
+  render(
+    <Provider>
+      <App initialState={initialState} />
+    </Provider>
+  );
 
-export interface TestClient {
-  socket: Socket;
-  state: State;
-  receivedMessages: TestMessage[];
-  expectedMessages: Record<string, Function>;
-};
+export const assertMessageEmitted = (expectedType: string, callback: Function) => {
+  const fakeSocket: any = useSocket();
 
-export const createClient = () => {
-  let client: TestClient;
+  let emitted = false;
 
-  const setState = (setter: (prev: State) => State) => {
-    client.state = setter(client.state);
+  fakeSocket.emit = (type: string) => {
+    if (type === expectedType)
+      emitted = true;
   };
 
-  const socket = initializeSocket('http://0.0.0.0:' + process.env.PORT, setState);
+  callback();
 
-  client = {
-    socket,
-    state: { ...initialState },
-    receivedMessages: [],
-    expectedMessages: {}
-  };
+  fakeSocket.emit = () => {};
 
-  return client;
+  assert(emitted, 'Message not emitted');
 };
 
-export const setExpectedMessages = (client: TestClient, ...types: string[]) => {
-  types.forEach(type => {
-    const callback = (...args: any[]) => {
-      if (client.expectedMessages[type]) {
-        client.expectedMessages[type](args);
-        delete client.expectedMessages[type];
-      } else {
-        client.receivedMessages.push({ type, args });
-      }
-
-      client.socket.off(type, callback);
-    };
-
-    client.socket.on(type, callback);
-  });
-};
-
-export const waitForMessage = (client: TestClient, type: string) => {
-  return new Promise<any[]>((resolve, reject) => {
-    const message = client.receivedMessages[0];
-
-    if (message?.type === type) {
-      client.receivedMessages.splice(0, 1);
-      resolve(message.args);
-    } else {
-      const callback = (args: any[]) => resolve(args);
-      client.expectedMessages[type] = callback;
-    }
-  });
-};
-
-export const assertMessagesEmittedToClients = async (clients: TestClient[], ...types: string[]) => {
-  for (const client of clients)
-    setExpectedMessages(client, ...types);
-
-  for (const type of types)
-    for (const client of clients)
-      await waitForMessage(client, type);
+export const setTestSocket = () => {
+  setSocket({
+    emit: () => {},
+    on: () => {},
+    off: () => {},
+  } as any);
 };

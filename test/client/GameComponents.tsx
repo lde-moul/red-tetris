@@ -1,6 +1,6 @@
 'use strict';
 
-import { renderApp, setTestSocket } from '../ComponentTesting';
+import { renderApp, setTestSocket } from '../ClientTesting';
 import { BlockType } from '../../src/client/Board';
 import { State } from '../../src/client/state';
 import Board from '../../src/client/components/Board';

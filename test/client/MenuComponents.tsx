@@ -1,6 +1,6 @@
 'use strict';
 
-import { assertMessageEmitted, renderApp, setTestSocket } from '../ComponentTesting';
+import { assertMessageEmitted, renderApp, setTestSocket } from '../ClientTesting';
 
 import jsdom from 'jsdom-global';
 jsdom();

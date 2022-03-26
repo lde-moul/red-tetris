@@ -1,6 +1,6 @@
 'use strict';
 
-import { assertMessagesEmittedToClients, createClient, setExpectedMessages, TestClient, waitForMessage } from './ClientTesting';
+import { assertMessagesEmittedToClients, createClient, setExpectedMessages, TestClient, waitForMessage } from './ServerTesting';
 import RedTetrisServer from '../src/server/RedTetrisServer';
 
 import assert from 'assert';

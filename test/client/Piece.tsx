@@ -9,7 +9,10 @@ import assert from 'assert';
 describe('Client piece', function() {
   const getShape = (id: number): Piece => ({
     blocks: shapes[id].blocks,
-    center: shapes[id].center,
+    center: {
+      x: shapes[id].center.x,
+      y: shapes[id].center.y
+    },
     type: shapes[id].type
   });
 
