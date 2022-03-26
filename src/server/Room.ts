@@ -36,6 +36,11 @@ export default class {
     for (const receiver of this.players)
       receiver.socket.emit('LeaveRoom', player.name);
 
+    if (player == this.host && this.players.length !== 0) {
+        const id = Math.floor(Math.random() * this.players.length);
+        this.setHost(this.players[id]);
+    }
+
     if (this.players.filter(player => !player.lost).length <= 1)
       this.endGame();
   }
