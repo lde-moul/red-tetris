@@ -58,8 +58,10 @@ function initializeSocket(state: State, setState: StateSetter)
     setState(prev => produce(prev, draft => {
       draft.pageId = 'Game';
 
+      const board = getEmptyBoard();
+
       draft.room.players.forEach(player => {
-        player.pieces = [];
+        player.board = board;
       });
     }));
   });
