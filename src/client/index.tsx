@@ -1,6 +1,6 @@
 'use strict';
 
-import TitleMenu from './TitleMenu';
+import PlayerCreation from './PlayerCreation';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import io, { Socket } from 'socket.io-client';
@@ -9,13 +9,13 @@ let socket: Socket = io();
 
 function App()
 {
-  const [pageId, setPageId] = useState('TitleMenu');
+  const [pageId, setPageId] = useState('PlayerCreation');
 
   let Page;
   switch (pageId)
   {
-  case 'TitleMenu':
-    Page = TitleMenu;
+  case 'PlayerCreation':
+    Page = PlayerCreation;
     break;
   }
 
