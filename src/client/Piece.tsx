@@ -21,10 +21,10 @@ export const rotatePiece = (piece: Piece): Piece => ({
 export const canPieceBeHere = (piece: Piece, board: boolean[][]): boolean =>
   piece.blocks.every(block => isBoardBlockEmpty(board, block));
 
-export const spawnNextPiece = (player: Player) =>
+export const spawnNextPiece = (player: Player): Player =>
   {
-    const queue = [...player.pieceQueue];
-    const piece = queue.shift();
+    const pieceQueue = [...player.pieceQueue];
+    const piece = pieceQueue.shift();
 
-    return { ...player, piece, queue };
+    return { ...player, piece, pieceQueue };
   };
