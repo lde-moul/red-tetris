@@ -1,7 +1,7 @@
 'use strict';
 
+import { attachPieceToBoard, getEmptyBoard } from '../../src/client/LocalPlayer';
 import Piece, { canPieceBeHere, rotatePiece, translatePiece } from '../../src/client/Piece';
-import { attachPieceToBoard, getEmptyBoard } from '../../src/client/Player';
 import shapes from '../../src/server/shapes';
 
 import assert from 'assert';

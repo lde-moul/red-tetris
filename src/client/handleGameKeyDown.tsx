@@ -1,7 +1,7 @@
 'use strict';
 
+import { attachPieceToBoard, detachPieceFromBoard } from './LocalPlayer';
 import { canPieceBeHere, movePiece, rotatePiece } from './Piece';
-import { attachPieceToBoard, detachPieceFromBoard } from './Player';
 import { State } from './state';
 
 import produce from 'immer';

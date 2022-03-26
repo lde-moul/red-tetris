@@ -2,7 +2,7 @@
 
 import Game from './Game';
 import GamePreparation from './GamePreparation';
-import { getEmptyBoard } from '../Player';
+import { getEmptyBoard } from '../LocalPlayer';
 import Piece, { spawnNextPiece } from '../Piece';
 import PlayerCreation from './PlayerCreation';
 import Room from '../Room';

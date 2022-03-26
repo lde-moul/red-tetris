@@ -1,7 +1,6 @@
 'use strict';
 
-import { attachPieceToBoard, detachPieceFromBoard } from '../../src/client/Player';
-import { getEmptyBoard } from '../../src/client/Player';
+import { attachPieceToBoard, detachPieceFromBoard, getEmptyBoard } from '../../src/client/LocalPlayer';
 import shapes from '../../src/server/shapes';
 
 import assert from 'assert';

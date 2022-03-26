@@ -1,6 +1,6 @@
 'use strict';
 
-import Player, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty } from "./Player";
+import Player, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty } from "./LocalPlayer";
 import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";
 
 import { Socket } from "socket.io-client";
