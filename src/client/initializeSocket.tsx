@@ -32,7 +32,7 @@ export default (state: State, setState: StateSetter) => {
       draft.room.players.push({ name, lost: false });
 
       if (name === draft.playerName)
-        draft.room.player = { name: draft.playerName };
+        draft.room.player = {};
     }));
   });
 
