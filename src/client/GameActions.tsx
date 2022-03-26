@@ -1,8 +1,8 @@
 'use strict';
 
-import { attachPieceToBoard, detachPieceFromBoard } from './Board';
+import { attachPieceToBoard, clearFullLines, detachPieceFromBoard } from './Board';
 import LocalPlayer from './LocalPlayer';
-import { canPieceBeHere, movePiece, rotatePiece } from './Piece';
+import { canPieceBeHere, movePiece, rotatePiece, spawnNextPiece, translatePiece } from './Piece';
 
 import { Socket } from 'socket.io-client';
 
@@ -31,4 +31,24 @@ export const rotatePieceAction = (player: LocalPlayer, socket: Socket): LocalPla
     };
   else
     return player;
+};
+
+export const dropPieceAction = (player: LocalPlayer, tick: number, socket: Socket): LocalPlayer => {
+  socket.emit('DropPiece');
+
+  const boardWithoutPiece = detachPieceFromBoard(player.piece, player.board);
+  let droppedPiece = player.piece;
+
+  while (true) {
+    const movedPiece = translatePiece(droppedPiece, { x: 0, y: 1 });
+
+    if (!canPieceBeHere(movedPiece, boardWithoutPiece))
+      return spawnNextPiece({
+        ...player,
+        board: clearFullLines(attachPieceToBoard(droppedPiece, boardWithoutPiece)),
+        fallTick: tick
+      });
+
+    droppedPiece = movedPiece;
+  }
 };

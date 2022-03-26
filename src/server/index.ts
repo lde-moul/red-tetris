@@ -117,6 +117,20 @@ io.on('connection', (socket: Socket) => {
     if (!player.piece.canBeHere())
       player.piece.rotateCCW();
   });
+
+  socket.on('DropPiece', () => {
+    let piece = player.piece;
+    if (!piece)
+      return;
+
+    do {
+      piece.translate(new Vector2D(0, 1));
+    } while (piece.canBeHere());
+
+    piece.translate(new Vector2D(0, -1));
+    piece.land();
+    player.spawnNextPiece();
+  });
 });
 
 server.listen(port, () => {

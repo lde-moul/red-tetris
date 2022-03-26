@@ -1,6 +1,6 @@
 'use strict';
 
-import { movePieceDownAction, movePieceLeftAction, movePieceRightAction, rotatePieceAction } from './GameActions';
+import { dropPieceAction, movePieceDownAction, movePieceLeftAction, movePieceRightAction, rotatePieceAction } from './GameActions';
 import { State } from './state';
 
 import produce from 'immer';
@@ -28,6 +28,10 @@ export default (event: KeyboardEvent, state: State): State => {
       case 'ArrowUp':
         room.player.upPressTick = room.tick;
         room.player = rotatePieceAction(room.player, state.socket);
-    }
+        break;
+      case ' ':
+        room.player = dropPieceAction(room.player, room.tick, state.socket);
+        break;
+      }
   });
 };
