@@ -73,5 +73,5 @@ export default class Piece {
 
     for (const receiver of this.player.room.players)
       this.player.emitSpectrum(receiver);
-}
+  }
 };
