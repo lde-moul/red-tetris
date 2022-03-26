@@ -1,5 +1,6 @@
 'use strict';
 
+import useSocket from '../socket';
 import { useTracked } from '../state';
 import '../../../styles.css';
 
@@ -7,9 +8,10 @@ import React from 'react';
 
 export default () => {
   const [state, setState] = useTracked();
+  const socket = useSocket();
 
   const handleRestart = () => {
-    state.socket.emit('RestartGame');
+    socket.emit('RestartGame');
   };
 
   const winner = state.room.players.find(player => !player.lost);

@@ -1,5 +1,6 @@
 'use strict';
 
+import useSocket from '../socket';
 import { useTracked } from '../state';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -8,10 +9,11 @@ export default () => {
   const [state, setState] = useTracked();
   const [name, setName] = useState('Room name');
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const socket = useSocket();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    state.socket.emit('CreateRoom', name);
+    socket.emit('CreateRoom', name);
   };
 
   const handleNameChange: React.FormEventHandler<HTMLInputElement> = (event) => {
@@ -29,14 +31,14 @@ export default () => {
   }
 
   useEffect(() => {
-    state.socket.on('RoomNameExists', () => {
+    socket.on('RoomNameExists', () => {
       const nameInput = nameInputRef.current;
       nameInput.setCustomValidity('This name is already taken.');
       nameInput.reportValidity();
     });
 
     return () => {
-      state.socket.off('RoomNameExists');
+      socket.off('RoomNameExists');
     };
   }, []);
 

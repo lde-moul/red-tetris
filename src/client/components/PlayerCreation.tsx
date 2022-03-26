@@ -1,5 +1,6 @@
 'use strict';
 
+import useSocket from '../socket';
 import { useTracked } from '../state';
 import "../../../styles.css";
 import Title from './Title';
@@ -10,10 +11,11 @@ export default () => {
   const [state, setState] = useTracked();
   const [name, setName] = useState('Player name');
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const socket = useSocket();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    state.socket.emit('CreatePlayer', name);
+    socket.emit('CreatePlayer', name);
   };
 
   const handleNameChange: React.FormEventHandler<HTMLInputElement> = (event) => {
@@ -31,14 +33,14 @@ export default () => {
   }
 
   useEffect(() => {
-    state.socket.on('PlayerNameExists', () => {
+    socket.on('PlayerNameExists', () => {
       const nameInput = nameInputRef.current;
       nameInput.setCustomValidity('This name is already taken.');
       nameInput.reportValidity();
     });
 
     return () => {
-      state.socket.off('PlayerNameExists');
+      socket.off('PlayerNameExists');
     };
   }, []);
 

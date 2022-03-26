@@ -28,7 +28,7 @@ export const createClient = () => {
 
   client = {
     socket,
-    state: { ...initialState, socket },
+    state: { ...initialState },
     receivedMessages: [],
     expectedMessages: {}
   };

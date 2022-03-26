@@ -4,10 +4,8 @@ import Room from './Room';
 
 import { useState } from "react";
 import { createContainer } from "react-tracked";
-import { Socket } from 'socket.io-client';
 
 export interface State {
-  socket?: Socket;
   pageId: string;
   playerName: string;
   room?: Room;

@@ -1,6 +1,7 @@
 'use strict';
 
 import RoomCreation from './RoomCreation';
+import useSocket from '../socket';
 import { useTracked } from '../state';
 import "../../../styles.css";
 import Title from './Title';
@@ -9,9 +10,10 @@ import React from 'react';
 
 export default () => {
   const [state, setState] = useTracked();
+  const socket = useSocket();
 
   const handleJoin = (name: string) => {
-    state.socket.emit('JoinRoom', name);
+    socket.emit('JoinRoom', name);
   }
 
   const rooms = state.roomNames.map(name =>

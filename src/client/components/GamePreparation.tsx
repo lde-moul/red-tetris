@@ -1,5 +1,6 @@
 'use strict';
 
+import useSocket from '../socket';
 import { useTracked } from '../state';
 import Title from './Title';
 
@@ -7,15 +8,16 @@ import React from 'react';
 
 export default () => {
   const [state, setState] = useTracked();
+  const socket = useSocket();
 
   const names = state.room.players.map(player => player.name);
 
   const handleHostChange = (name: string) => {
-    state.socket.emit('ChangeHost', name);
+    socket.emit('ChangeHost', name);
   };
 
   const handleStart = () => {
-    state.socket.emit('StartGame');
+    socket.emit('StartGame');
   };
 
   const playerList = names.map(name => {
