@@ -57,5 +57,7 @@ export default (event: KeyboardEvent, state: State): State => {
 
       player.board = attachPieceToBoard(player.piece, player.board);
     });
+  default:
+    return state;
   }
 };
