@@ -41,4 +41,23 @@ export default class {
     for (const block of piece.blocks)
       this.setBlock(block, true);
   }
+
+  isLineFull(y: number): boolean {
+    return this.blocks[y].every(filled => filled);
+  }
+
+  moveDownAllLinesAbove(limit: number) {
+    for (let y = 0; y < limit; y++)
+      for (let x = 0; x < this.blocks[y].length; x++)
+        this.blocks[y + 1][x] = this.blocks[y][x];
+
+    for (let x = 0; x < this.blocks[0].length; x++)
+      this.blocks[0][x] = false;
+  }
+
+  clearFullLines() {
+    for (let y = 0; y < this.blocks.length; y++)
+      if (this.isLineFull(y))
+        this.moveDownAllLinesAbove(y);
+  }
 }

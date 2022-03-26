@@ -38,4 +38,10 @@ export default class Piece {
   canBeHere(): boolean {
     return this.blocks.every(block => this.player.board.isBlockEmpty(block));
   }
+
+  land() {
+    const board = this.player.board;
+    board.attachPiece(this);
+    board.clearFullLines();
+  }
 };

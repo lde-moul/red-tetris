@@ -50,3 +50,13 @@ export const attachPieceToBoard = (piece: Piece, board: boolean[][]): boolean[][
 
 export const detachPieceFromBoard = (piece: Piece, board: boolean[][]): boolean[][] =>
   attachOrDetach(piece, board, false);
+
+const isLineFull = (line: boolean[]): boolean =>
+  line.every(block => block);
+
+export const clearFullLines = (board: boolean[][]): boolean[][] => {
+  let clearedBoard = board.filter(line => !isLineFull(line));
+  const numClearedLines = board.length - clearedBoard.length;
+  const newLines = new Array(numClearedLines).fill(getEmptyLine());
+  return newLines.concat(clearedBoard);
+};

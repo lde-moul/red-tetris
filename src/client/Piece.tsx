@@ -1,6 +1,6 @@
 'use strict';
 
-import Player, { attachPieceToBoard, detachPieceFromBoard, isBoardBlockEmpty } from "./Player";
+import Player, { attachPieceToBoard, clearFullLines, detachPieceFromBoard, isBoardBlockEmpty } from "./Player";
 import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";
 
 import { Socket } from "socket.io-client";
@@ -44,7 +44,10 @@ export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Pla
       board: attachPieceToBoard(movedPiece, boardWithoutPiece)
     };
   else if (offset.y > 0)
-    return spawnNextPiece(player);
+    return spawnNextPiece({
+      ...player,
+      board: clearFullLines(player.board)
+    });
   else
     return player;
 };

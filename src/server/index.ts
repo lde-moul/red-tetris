@@ -102,7 +102,7 @@ io.on('connection', (socket: Socket) => {
 
       if (offset.y > 0)
       {
-        player.board.attachPiece(piece);
+        piece.land();
         player.spawnNextPiece();
       }
     }
