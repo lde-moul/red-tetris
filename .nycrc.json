@@ -1,6 +1,12 @@
 {
   "include": "src",
   "all": true,
+  "watermarks": {
+    "branches": [5, 50],
+    "lines": [5, 70],
+    "functions": [5, 70],
+    "statements": [5, 70]
+  },
   "require": ["ts-node/register"],
   "reporter": ["text", "lcov", "html"]
 }
