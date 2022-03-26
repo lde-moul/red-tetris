@@ -6,8 +6,7 @@ import { useTracked } from './state';
 
 import React from 'react';
 
-export default () =>
-{
+export default () => {
   const [state, setState] = useTracked();
 
   const names = state.room.players.map((player: Player) => player.name);

@@ -8,8 +8,7 @@ interface BlockProps {
   filled: boolean;
 };
 
-export default ({ filled }: BlockProps) =>
-{
+export default ({ filled }: BlockProps) => {
   return filled ?
     <div className="block"></div> :
     <div></div>;

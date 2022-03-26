@@ -1,13 +1,12 @@
 'use strict';
 
 import { useTracked } from './state';
+import "../../styles.css";
 
 import produce from 'immer';
 import React, { useState } from 'react';
-import "../../styles.css";
 
-export default () =>
-{
+export default () => {
   const [state, setState] = useTracked();
   const [name, setName] = useState('Player name');
 

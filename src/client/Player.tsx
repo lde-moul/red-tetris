@@ -1,3 +1,5 @@
+'use strict';
+
 import Piece from "./Piece";
 
 export default interface Player {

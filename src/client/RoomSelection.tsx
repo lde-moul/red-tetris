@@ -5,8 +5,7 @@ import { useTracked } from './state';
 
 import React from 'react';
 
-export default () =>
-{
+export default () => {
   const [state, setState] = useTracked();
 
   const handleJoin = (name: string) => {

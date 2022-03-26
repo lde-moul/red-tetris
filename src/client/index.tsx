@@ -11,8 +11,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import io, { Socket } from 'socket.io-client';
 
-function initializeSocket(state: State, setState: StateSetter)
-{
+const initializeSocket = (state: State, setState: StateSetter) => {
   state.socket = io();
 
   state.socket.on('PlayerCreated', (name) => {
@@ -67,8 +66,7 @@ function initializeSocket(state: State, setState: StateSetter)
   });
 }
 
-function App()
-{
+const App = () => {
   const [state, setState] = useTracked();
 
   if (!state.socket)

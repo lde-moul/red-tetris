@@ -4,8 +4,7 @@ import { useTracked } from './state';
 
 import React, { useState } from 'react';
 
-export default () =>
-{
+export default () => {
   const [state, setState] = useTracked();
   const [name, setName] = useState('Room name');
 

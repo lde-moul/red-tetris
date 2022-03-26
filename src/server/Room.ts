@@ -14,8 +14,7 @@ export default class {
     this.players = [];
   }
 
-  addPlayer(player: Player)
-  {
+  addPlayer(player: Player) {
     this.players.push(player);
     player.room = this;
 
@@ -31,8 +30,7 @@ export default class {
       receiver.socket.emit('LeaveRoom', player.name);
   }
 
-  setHost(host: Player)
-  {
+  setHost(host: Player) {
     this.host = host;
 
     for (const receiver of this.players)

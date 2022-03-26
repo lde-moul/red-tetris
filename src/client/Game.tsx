@@ -6,8 +6,7 @@ import '../../styles.css';
 
 import React from 'react';
 
-export default () =>
-{
+export default () => {
   const [state, setState] = useTracked();
 
   const player = state.room.players.find(player => player.name == state.playerName);

@@ -6,8 +6,7 @@ interface PlayerListProps {
   names: string[];
 };
 
-export default ({ names }: PlayerListProps) =>
-{
+export default ({ names }: PlayerListProps) => {
   const elements = names.map(name =>
     <li>{name}</li>
   );
