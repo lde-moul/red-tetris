@@ -1,15 +1,19 @@
 'use strict';
 
+import { BlockType } from '../Board';
 import '../../../styles.css';
 
 import React from 'react';
 
 interface BlockProps {
-  filled: boolean;
+  type: BlockType;
 };
 
-export default ({ filled }: BlockProps) => {
-  return filled ?
-    <div className="full-block"></div> :
-    <div className="empty-block"></div>;
-};
+const blockClasses = [
+  'empty-block',
+  'malus-block',
+  'full-block',
+];
+
+export default ({ type }: BlockProps) =>
+  <div className={blockClasses[type]}></div>;

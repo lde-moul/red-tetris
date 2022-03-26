@@ -15,7 +15,7 @@ export default ({ board, className }: BoardProps) => {
   let blocks = [];
   for (const line of board.blocks)
     for (const blockType of line)
-      blocks.push(<Block filled={blockType != BlockType.Empty} />);
+      blocks.push(<Block type={blockType} />);
 
   return (
     <div className={className}>
