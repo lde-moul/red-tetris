@@ -57,6 +57,10 @@ export default class Piece {
         for (const opponent of this.player.room.players)
           if (opponent != this.player && opponent.board) {
             opponent.board.addMalusLines(numMalusLines);
+
+            if (opponent.piece)
+              opponent.piece.translate(new Vector2D(0, -numMalusLines));
+
             opponent.socket.emit('AddMalusLines', numMalusLines);
           }
       }
