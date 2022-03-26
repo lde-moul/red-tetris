@@ -1,22 +1,24 @@
 'use strict';
 
 import { createClient, setExpectedMessages, TestClient, waitForMessage } from './ClientTesting';
-import startServer from '../src/server/startServer';
+import RedTetrisServer from '../src/server/RedTetrisServer';
 
 import assert from 'assert';
 
 describe('Connection', function() {
   let clients: TestClient[];
-  let closeServer: Function;
+  let server: RedTetrisServer;
 
   before(async function() {
-    closeServer = await startServer();
+    server = new RedTetrisServer();
+    await server.start();
+
     clients = Array.from(Array(2), createClient);
   });
 
   after(async function() {
     clients.forEach(client => client.socket.disconnect());
-    await closeServer();
+    server.close();
   });
 
   it('should confirm the creation of the new player with the correct name', async function() {

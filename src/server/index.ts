@@ -1,5 +1,5 @@
 'use strict';
 
-import startServer from './startServer';
+import RedTetrisServer from './RedTetrisServer';
 
-startServer();
+new RedTetrisServer().start();
