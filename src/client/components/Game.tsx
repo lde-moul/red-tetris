@@ -1,6 +1,6 @@
 'use strict';
 
-import Block from './Block';
+import Board from './Board';
 import handleGameKeyDown from '../handleGameKeyDown';
 import { movePiece } from '../Piece';
 import { useTracked } from '../state';
@@ -32,17 +32,10 @@ export default () => {
     };
   }, []);
 
-  let board = [];
-  for (const line of state.room.player.board.slice(4))
-    for (const filled of line)
-      board.push(<Block filled={filled} />);
-
   return (
     <div className="game">
       <div className="game-padding"></div>
-      <div className="board">
-        {board}
-      </div>
+      <Board board={state.room.player.board} />
       <div className="hud"></div>
     </div>
   );
