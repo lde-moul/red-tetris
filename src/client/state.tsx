@@ -16,10 +16,12 @@ export interface State {
 
 export type StateSetter = (setter: (prev: State) => State) => void;
 
-const useValue = () => useState<State>({
+export const initialState: State = {
   pageId: 'PlayerCreation',
   playerName: 'Player',
   roomNames: [],
-});
+};
+
+const useValue = () => useState<State>(initialState);
 
 export const { Provider, useTracked } = createContainer(useValue);
