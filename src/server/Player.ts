@@ -21,7 +21,8 @@ export default class {
   emitNextPiece() {
     if (this.pieceQueueId === null)
       this.pieceQueueId = 0;
-    this.pieceQueueId++;
+    else
+      this.pieceQueueId++;
 
     const piece = this.room.getPieceFromQueue(this.pieceQueueId);
     this.socket.emit('NextPiece', piece);
