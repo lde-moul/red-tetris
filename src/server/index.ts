@@ -71,6 +71,9 @@ io.on('connection', (socket: Socket) => {
     room.emitState(player);
     room.addPlayer(player);
     room.setHost(player);
+
+    for (const receiver of players)
+      receiver.socket.emit('RoomNames', rooms.map(room => room.name));
   });
 
   socket.on('StartGame', () => {
