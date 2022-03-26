@@ -78,7 +78,7 @@ export default (host: string, setState: StateSetter): Socket => {
       if (room.phase === 'preparation')
         draft.pageId = 'GamePreparation';
       else if (room.phase === 'game') {
-        const inGame = (draft.room.players.find(player => player.name === draft.playerName) !== null);
+        const inGame = (draft.room.players.find(player => player.name === draft.playerName) !== undefined);
         draft.pageId = inGame ? 'Game' : 'GameJoining';
       }
       else if (room.phase === 'results')
@@ -140,8 +140,18 @@ export default (host: string, setState: StateSetter): Socket => {
       if (!draft.room)
         return;
 
-        const player = draft.room.players.find(player => player.name === name);
-        player.spectrum = spectrum;
+      const player = draft.room.players.find(player => player.name === name);
+      player.spectrum = spectrum;
+    }));
+  });
+
+  socket.on('Stats', (score: number, numLinesCleared: number) => {
+    setState(prev => produce(prev, draft => {
+      if (!draft.room)
+        return;
+
+      draft.room.player.score = score;
+      draft.room.player.numLinesCleared = numLinesCleared;
     }));
   });
 
