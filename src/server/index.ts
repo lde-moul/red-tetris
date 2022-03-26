@@ -19,7 +19,20 @@ let rooms: Room[] = [];
 
 const sendFile = (res, path) => {
   res.sendFile(path, { root: __dirname + '/../..' });
+};
+
+const leaveRoom = (player: Player) => {
+  const room = player.room;
+  if (room) {
+    room.removePlayer(player);
+    if (room.players.length === 0) {
+      rooms.splice(rooms.indexOf(room), 1);
+
+      for (const receiver of players)
+        receiver.socket.emit('RoomNames', rooms.map(room => room.name));
 }
+  }
+};
 
 app.get('/bundle.js', (req, res) => {
   sendFile(res, 'dist/bundle.js');
@@ -34,13 +47,7 @@ io.on('connection', (socket: Socket) => {
   players.push(player);
 
   socket.on('disconnect', () => {
-    const room = player.room;
-    if (room) {
-      room.removePlayer(player);
-      if (room.players.length === 0)
-        rooms.splice(rooms.indexOf(room), 1);
-    }
-
+    leaveRoom(player);
     players.splice(players.indexOf(player), 1);
   });
 
@@ -62,15 +69,7 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('LeaveRoom', () => {
-    if (!player.room)
-      return;
-
-    const room = player.room;
-    if (room) {
-      room.removePlayer(player);
-      if (room.players.length === 0)
-        rooms.splice(rooms.indexOf(room), 1);
-    }
+    leaveRoom(player);
   });
 
   socket.on('CreateRoom', (name: string) => {
