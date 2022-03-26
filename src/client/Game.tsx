@@ -1,7 +1,7 @@
 'use strict';
 
 import Block from './Block';
-import { translatePiece } from './Piece';
+import { rotatePiece, translatePiece } from './Piece';
 import { attachPieceToBoard, detachPieceFromBoard } from './Player';
 import { useTracked } from './state';
 import '../../styles.css';
@@ -36,6 +36,15 @@ export default () => {
 
         player.board = detachPieceFromBoard(player.piece, player.board);
         player.piece = translatePiece(player.piece, { x: 1, y: 0 });
+        player.board = attachPieceToBoard(player.piece, player.board);
+      }));
+    }
+    else if (event.key == 'ArrowUp') {
+      setState(prev => produce(prev, draft => {
+        const player = draft.room.players.find(player => player.name == draft.playerName);
+
+        player.board = detachPieceFromBoard(player.piece, player.board);
+        player.piece = rotatePiece(player.piece);
         player.board = attachPieceToBoard(player.piece, player.board);
       }));
     }

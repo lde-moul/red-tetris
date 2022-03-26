@@ -15,3 +15,7 @@ export const floor2DVector = (v: Vector2D): Vector2D => ({
   y: Math.floor(v.y)
 });
 
+export const rotatePoint = (point: Vector2D, center: Vector2D): Vector2D => ({
+  x: center.x - (point.y - center.y),
+  y: center.y + (point.x - center.x)
+});
