@@ -47,7 +47,7 @@ export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Pla
       board: attachPieceToBoard(movedPiece, boardWithoutPiece)
     };
   else if (offset.y > 0) {
-    if (isPieceOverflowing(movedPiece, boardWithoutPiece))
+    if (isPieceOverflowing(player.piece, boardWithoutPiece))
       return {
         ...player,
         piece: null
