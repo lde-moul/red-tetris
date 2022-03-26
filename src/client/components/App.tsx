@@ -64,6 +64,7 @@ const initializeSocket = (state: State, setState: StateSetter) => {
       draft.pageId = 'Game';
 
       draft.room.player.board = getEmptyBoard({ x: 10, y: 20 });
+      draft.room.player.piece = null;
       draft.room.player.pieceQueue = [];
       draft.room.player.fallTick = null;
 
