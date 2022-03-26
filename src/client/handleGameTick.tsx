@@ -18,6 +18,9 @@ export default (state: State): State =>
     let player = state.room.player;
     const tick = state.room.tick;
 
+    if (!player.piece)
+      return;
+
     if (shouldKeyRepeat(player.downPressTick, tick) || tick >= player.fallTick + 5)
       player = movePieceDownAction(player, tick, state.socket);
     if (shouldKeyRepeat(player.leftPressTick, tick))
