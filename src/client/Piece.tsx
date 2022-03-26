@@ -38,8 +38,6 @@ export const spawnNextPiece = (player: Player): Player => {
 };
 
 export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Player => {
-  socket.emit('MovePiece', offset);
-
   const boardWithoutPiece = detachPieceFromBoard(player.piece, player.board);
   const movedPiece = translatePiece(player.piece, offset);
 

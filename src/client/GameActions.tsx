@@ -16,16 +16,28 @@ const wallKickOffsets: Vector2D[] = [
   { x:  0, y: -1 },
 ];
 
-export const movePieceDownAction = (player: LocalPlayer, tick: number, socket: Socket): LocalPlayer => ({
-  ...movePiece(player, { x: 0, y: 1 }, socket),
-  fallTick: tick
-});
+export const movePieceDownAction = (player: LocalPlayer, tick: number, socket: Socket): LocalPlayer => {
+  const offset = { x: 0, y: 1 };
 
-export const movePieceLeftAction = (player: LocalPlayer, socket: Socket): LocalPlayer =>
-  movePiece(player, { x: -1, y: 0 }, socket);
+  socket.emit('MovePiece', offset);
 
-export const movePieceRightAction = (player: LocalPlayer, socket: Socket): LocalPlayer =>
-  movePiece(player, { x: 1, y: 0 }, socket);
+  return {
+    ...movePiece(player, offset, socket),
+    fallTick: tick
+  };
+};
+
+export const movePieceLeftAction = (player: LocalPlayer, socket: Socket): LocalPlayer => {
+  const offset = { x: -1, y: 0 };
+  socket.emit('MovePiece', offset);
+  return movePiece(player, offset, socket);
+};
+
+export const movePieceRightAction = (player: LocalPlayer, socket: Socket): LocalPlayer => {
+  const offset = { x: 1, y: 0 };
+  socket.emit('MovePiece', offset);
+  return movePiece(player, offset, socket);
+};
 
 export const rotatePieceAction = (player: LocalPlayer, socket: Socket): LocalPlayer => {
   socket.emit('RotatePiece');
