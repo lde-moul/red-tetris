@@ -1,8 +1,9 @@
 'use strict';
 
+import Player from './Player';
+
 const express = require('express');
 const http = require('http');
-import Player from './Player';
 import { Server, Socket } from 'socket.io';
 
 const app = express();
