@@ -5,6 +5,15 @@ import Player from "./Player";
 import Vector2D from "./Vector2D";
 
 export default class Piece {
+  static wallKickOffsets: Vector2D[] = [
+    new Vector2D( 0,  0),
+    new Vector2D(-1,  0),
+    new Vector2D( 1,  0),
+    new Vector2D(-2,  0),
+    new Vector2D( 2,  0),
+    new Vector2D( 0, -1),
+  ];
+
   blocks: Vector2D[];
   center: Vector2D;
   type: BlockType;
@@ -45,6 +54,48 @@ export default class Piece {
 
   isOverflowing(): boolean {
     return !this.blocks.every(block => this.player.board.isPositionInside(block));
+  }
+
+  move(offset: Vector2D) {
+    this.translate(offset);
+
+    if (!this.canBeHere())
+    {
+      this.translate(offset.opposite());
+
+      if (offset.y > 0)
+      {
+        this.land();
+
+        if (!this.player.lost)
+          this.player.spawnNextPiece();
+      }
+    }
+  }
+
+  turn() {
+    this.rotateCW();
+
+    for (const offset of Piece.wallKickOffsets) {
+      this.translate(offset);
+      if (this.canBeHere())
+        return;
+      this.translate(offset.opposite());
+    }
+
+    this.rotateCCW();
+  }
+
+  drop() {
+    do {
+      this.translate(new Vector2D(0, 1));
+    } while (this.canBeHere());
+
+    this.translate(new Vector2D(0, -1));
+    this.land();
+
+    if (!this.player.lost)
+      this.player.spawnNextPiece();
   }
 
   land() {

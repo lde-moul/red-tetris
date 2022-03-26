@@ -11,15 +11,6 @@ import { Server, Socket } from 'socket.io';
 export default class RedTetrisServer {
   static NAME_PATTERN = /^[\w +*/%^()=<>:,;.!?'"~@#$&-]{1,20}$/;
 
-  static wallKickOffsets: Vector2D[] = [
-    new Vector2D( 0,  0),
-    new Vector2D(-1,  0),
-    new Vector2D( 1,  0),
-    new Vector2D(-2,  0),
-    new Vector2D( 2,  0),
-    new Vector2D( 0, -1),
-  ];
-
   players: Player[];
   rooms: Room[];
   closeCallback: Function;
@@ -187,8 +178,7 @@ export default class RedTetrisServer {
   }
 
   handleMovePiece(player: Player, offset: Vector2D) {
-    let piece = player.piece;
-    if (!piece)
+    if (!player.piece)
       return;
 
     if (!(typeof offset == 'object' && typeof offset.x == 'number' && typeof offset.y == 'number'))
@@ -199,54 +189,17 @@ export default class RedTetrisServer {
     if (!(validOffsets.includes(offset.x) && validOffsets.includes(offset.y)))
       return;
 
-    piece.translate(offset);
-
-    if (!piece.canBeHere())
-    {
-      piece.translate(offset.opposite());
-
-      if (offset.y > 0)
-      {
-        piece.land();
-
-        if (!player.lost)
-          player.spawnNextPiece();
-      }
-    }
+    player.piece.move(offset);
   }
 
   handleRotatePiece(player: Player) {
-    const piece = player.piece;
-
-    if (!piece)
-      return;
-
-    piece.rotateCW();
-
-    for (const offset of RedTetrisServer.wallKickOffsets) {
-      piece.translate(offset);
-      if (piece.canBeHere())
-        return;
-      piece.translate(offset.opposite());
-    }
-
-    piece.rotateCCW();
+    if (player.piece)
+      player.piece.turn();
   }
 
   handleDropPiece(player: Player) {
-    let piece = player.piece;
-    if (!piece)
-      return;
-
-    do {
-      piece.translate(new Vector2D(0, 1));
-    } while (piece.canBeHere());
-
-    piece.translate(new Vector2D(0, -1));
-    piece.land();
-
-    if (!player.lost)
-      player.spawnNextPiece();
+    if (player.piece)
+      player.piece.drop();
   }
 
   leaveRoom(player: Player) {
