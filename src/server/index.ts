@@ -16,6 +16,15 @@ const NAME_PATTERN = /^[\w +*/%^()=<>:,;.!?'"~@#$&-]{1,20}$/;
 
 const port = process.env.PORT;
 
+const wallKickOffsets: Vector2D[] = [
+  new Vector2D( 0,  0),
+  new Vector2D(-1,  0),
+  new Vector2D( 1,  0),
+  new Vector2D(-2,  0),
+  new Vector2D( 2,  0),
+  new Vector2D( 0, -1),
+];
+
 let players: Player[] = [];
 let rooms: Room[] = [];
 
@@ -163,13 +172,21 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('RotatePiece', () => {
-    if (!player.piece)
+    const piece = player.piece;
+
+    if (!piece)
       return;
 
-    player.piece.rotateCW();
+    piece.rotateCW();
 
-    if (!player.piece.canBeHere())
-      player.piece.rotateCCW();
+    for (const offset of wallKickOffsets) {
+      piece.translate(offset);
+      if (piece.canBeHere())
+        return;
+      piece.translate(offset.opposite());
+    }
+
+    piece.rotateCCW();
   });
 
   socket.on('DropPiece', () => {
