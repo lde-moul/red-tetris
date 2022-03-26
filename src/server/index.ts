@@ -63,6 +63,9 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('CreatePlayer', (name: string) => {
+    if (typeof name != 'string')
+      return;
+
     name = name.trim();
 
     if (!name.match(NAME_PATTERN))
@@ -81,6 +84,9 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('JoinRoom', (name: string) => {
+    if (typeof name != 'string')
+      return;
+
     let room = rooms.find(room => room.name == name);
 
     if (!room || player.room)
@@ -95,7 +101,7 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('CreateRoom', (name: string) => {
-    if (player.room)
+    if (typeof name != 'string' || player.room)
       return;
 
     name = name.trim();
@@ -121,7 +127,7 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('ChangeHost', (name: string) => {
-    if (!player.room)
+    if (typeof name != 'string' || !player.room)
       return;
 
     const host = player.room.players.find(player => player.name == name);
@@ -152,6 +158,8 @@ io.on('connection', (socket: Socket) => {
     if (!piece)
       return;
 
+    if (!(typeof offset == 'object' && typeof offset.x == 'number' && typeof offset.y == 'number'))
+      return;
     offset = new Vector2D(offset.x, offset.y);
 
     const validOffsets = [-1, 0, 1];
