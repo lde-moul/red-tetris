@@ -2,6 +2,7 @@
 
 import { renderApp, setTestSocket } from '../ComponentTesting';
 import { BlockType } from '../../src/client/Board';
+import { State } from '../../src/client/state';
 import Board from '../../src/client/components/Board';
 import PieceQueue from '../../src/client/components/PieceQueue';
 import PlayerInfo from '../../src/client/components/PlayerInfo';
@@ -78,12 +79,13 @@ describe('Game components', function() {
     type: BlockType.Filled2
   };
 
-  const testState = {
+  const testState: State = {
     pageId: 'Game',
     playerName: 'Test User 1',
     roomNames: ['Test Room'],
     room: {
       name: 'Test Room',
+      phase: 'game',
       tick: 10,
       hostName: 'Test User 1',
       player: {

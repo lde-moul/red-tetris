@@ -1,6 +1,6 @@
 'use strict';
 
-import Board from "./Board";
+import Board, { getEmptyBoard } from "./Board";
 import Piece from "./Piece";
 
 export default interface LocalPlayer {
@@ -14,3 +14,17 @@ export default interface LocalPlayer {
   upPressTick?   : number;
   downPressTick? : number;
 };
+
+export const initialiseLocalPlayerGameVariables = (player: LocalPlayer): LocalPlayer => ({
+  ...player,
+
+  board: getEmptyBoard({ x: 10, y: 20 }),
+  piece: null,
+  pieceQueue: [],
+  fallTick: null,
+
+  leftPressTick: null,
+  rightPressTick: null,
+  upPressTick: null,
+  downPressTick: null
+});

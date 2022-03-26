@@ -1,7 +1,9 @@
 'use strict';
 
-import { addMalusLines, getEmptyBoard } from './Board';
+import { addMalusLines } from './Board';
+import { initialiseLocalPlayerGameVariables } from './LocalPlayer';
 import Piece, { spawnNextPiece, translatePiece } from './Piece';
+import Player from './Player';
 import Room from './Room';
 import { StateSetter } from './state';
 
@@ -29,10 +31,24 @@ export default (host: string, setState: StateSetter): Socket => {
       if (!draft.room)
         return;
 
-      draft.room.players.push({ name, lost: false });
+      let newPlayer: Player = {
+        name,
+        lost: (draft.room.phase !== 'preparation')
+      };
 
       if (name === draft.playerName)
         draft.room.player = {};
+
+      if (draft.room.phase === 'game') {
+        newPlayer.spectrum = new Array(10).fill(0);
+
+        if (name === draft.playerName) {
+          draft.pageId = 'Game';
+          draft.room.player = initialiseLocalPlayerGameVariables(draft.room.player);
+        }
+      }
+
+      draft.room.players.push(newPlayer);
     }));
   });
 
@@ -58,7 +74,12 @@ export default (host: string, setState: StateSetter): Socket => {
   socket.on('RoomState', (room: Room) => {
     setState(prev => produce(prev, draft => {
       draft.room = room;
-      draft.pageId = 'GamePreparation';
+
+      draft.pageId = {
+        preparation: 'GamePreparation',
+        game: 'GameJoining',
+        results: 'GameResults',
+      }[room.phase];
     }));
   });
 
@@ -66,15 +87,9 @@ export default (host: string, setState: StateSetter): Socket => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'Game';
 
-      draft.room.player.board = getEmptyBoard({ x: 10, y: 20 });
-      draft.room.player.piece = null;
-      draft.room.player.pieceQueue = [];
-      draft.room.player.fallTick = null;
+      draft.room.phase = 'game';
 
-      draft.room.player. leftPressTick = null;
-      draft.room.player.rightPressTick = null;
-      draft.room.player.   upPressTick = null;
-      draft.room.player. downPressTick = null;
+      draft.room.player = initialiseLocalPlayerGameVariables(draft.room.player);
 
       draft.room.players.forEach(player => {
         player.lost = false;
@@ -86,12 +101,14 @@ export default (host: string, setState: StateSetter): Socket => {
   socket.on('EndGame', () => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'GameResults';
+      draft.room.phase = 'results';
     }));
   });
 
   socket.on('RestartGame', () => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'GamePreparation';
+      draft.room.phase = 'preparation';
     }));
   });
 

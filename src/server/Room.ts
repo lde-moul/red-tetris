@@ -27,6 +27,16 @@ export default class {
 
     for (const receiver of this.players)
       receiver.socket.emit('JoinRoom', player.name);
+
+    player.lost = (this.phase !== 'preparation');
+
+    if (this.phase === 'game') {
+      player.board = new Board(new Vector2D(10, 20));
+
+      player.piece = null;
+      player.pieceId = null;
+      player.pieceQueueId = null;
+    }
   }
 
   removePlayer(player: Player) {
@@ -114,8 +124,13 @@ export default class {
   emitState(player: Player) {
     player.socket.emit('RoomState', {
       name: this.name,
+      phase: this.phase,
       players: this.players.map(player => {
-        return { name: player.name };
+        return {
+          name: player.name,
+          lost: player.lost,
+          spectrum: player.board?.getSpectrum()
+        };
       }),
       hostName: this.host?.name,
     });

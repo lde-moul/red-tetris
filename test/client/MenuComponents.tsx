@@ -84,6 +84,7 @@ describe('Menu components', function() {
       roomNames: ['Test Room'],
       room: {
         name: 'Test Room',
+        phase: 'preparation',
         tick: 0,
         hostName: 'Test User 1',
         player: {},
@@ -122,6 +123,7 @@ describe('Menu components', function() {
       roomNames: ['Test Room'],
       room: {
         name: 'Test Room',
+        phase: 'results',
         tick: 100,
         hostName: 'Test User 1',
         player: {},
@@ -154,6 +156,7 @@ describe('Menu components', function() {
       roomNames: ['Test Room'],
       room: {
         name: 'Test Room',
+        phase: 'results',
         tick: 100,
         hostName: 'Test User 1',
         player: {},

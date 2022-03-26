@@ -44,6 +44,7 @@ describe('Connection', function() {
 
     assert.deepStrictEqual(room, {
       name: 'Test Room',
+      phase: 'preparation',
       players: []
     });
   });

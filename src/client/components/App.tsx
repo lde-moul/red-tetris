@@ -1,6 +1,7 @@
 'use strict';
 
 import Game from './Game';
+import GameJoining from './GameJoining';
 import GamePreparation from './GamePreparation';
 import GameResults from './GameResults';
 import initializeSocket from '../initializeSocket';
@@ -19,6 +20,7 @@ const pages = {
   PlayerCreation,
   RoomSelection,
   GamePreparation,
+  GameJoining,
   Game,
   GameResults,
 };
