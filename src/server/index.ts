@@ -52,6 +52,18 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('CreatePlayer', (name: string) => {
+    name = name.trim();
+
+    const pattern = /^[\w +*/%^()=<>:,;.!?'"~@#$&-]{1,20}$/;
+    if (!name.match(pattern))
+      return;
+
+    const exists = players.find(player => player.name.toLowerCase() === name.toLowerCase());
+    if (exists) {
+      socket.emit('PlayerNameExists');
+      return;
+    }
+
     player.name = name;
 
     socket.emit('PlayerCreated', name);
