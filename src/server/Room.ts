@@ -41,7 +41,7 @@ export default class {
         this.setHost(this.players[id]);
     }
 
-    const numSurvivors = this.players.filter(player => !player.lost).length
+    const numSurvivors = this.players.filter(player => !player.lost).length;
     if (this.phase == 'game' && numSurvivors <= 1)
       this.endGame();
   }
