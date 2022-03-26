@@ -83,10 +83,9 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('MovePiece', (offset: Vector2D) => {
-    if (!player.piece)
-      return;
-
     let piece = player.piece;
+    if (!piece)
+      return;
 
     offset = new Vector2D(offset.x, offset.y);
 

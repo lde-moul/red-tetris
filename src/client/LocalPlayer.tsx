@@ -8,7 +8,7 @@ export default interface LocalPlayer {
   board?: Board;
   piece?: Piece;
   pieceQueue?: Piece[];
-  fallTick? : number;
+  fallTick?: number;
 
   leftPressTick? : number;
   rightPressTick?: number;
