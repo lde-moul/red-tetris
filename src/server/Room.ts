@@ -41,7 +41,8 @@ export default class {
         this.setHost(this.players[id]);
     }
 
-    if (this.players.filter(player => !player.lost).length <= 1)
+    const numSurvivors = this.players.filter(player => !player.lost).length
+    if (this.phase == 'game' && numSurvivors <= 1)
       this.endGame();
   }
 
@@ -95,7 +96,7 @@ export default class {
     const shapeId = Math.floor(Math.random() * this.pickableShapes.length);
     const piece = this.pickableShapes[shapeId].clone();
     this.pickableShapes.splice(shapeId, 1);
-    if (this.pickableShapes.length == 0)
+    if (this.pickableShapes.length === 0)
       this.pickableShapes = [ ...shapes ];
 
     const bottom = Math.max(...piece.blocks.map(block => block.y));
@@ -116,7 +117,7 @@ export default class {
       players: this.players.map(player => {
         return { name: player.name };
       }),
-      host: this.host?.name,
+      hostName: this.host?.name,
     });
   }
 }
