@@ -2,6 +2,8 @@
 
 import Game from './Game';
 import GamePreparation from './GamePreparation';
+import { getEmptyBoard } from './Player';
+import Piece, { spawnNextPiece } from './Piece';
 import PlayerCreation from './PlayerCreation';
 import RoomSelection from './RoomSelection';
 import { State, StateSetter, useTracked, Provider } from './state';
@@ -61,7 +63,20 @@ const initializeSocket = (state: State, setState: StateSetter) => {
 
       draft.room.players.forEach(player => {
         player.board = board;
+        player.pieceQueue = [];
       });
+    }));
+  });
+
+  state.socket.on('NextPiece', (piece: Piece) => {
+    setState(prev => produce(prev, draft => {
+      let playerId = draft.room.players.findIndex(player => player.name == draft.playerName);
+      let player = draft.room.players[playerId];
+
+      player.pieceQueue.push(piece);
+
+      if (!player.piece)
+        draft.room.players[playerId] = spawnNextPiece(player);
     }));
   });
 }

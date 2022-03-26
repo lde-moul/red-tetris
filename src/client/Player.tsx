@@ -6,6 +6,7 @@ export default interface Player {
   name: string;
   board?: boolean[][];
   piece?: Piece;
+  pieceQueue?: Piece[];
 };
 
 export const getEmptyBoard = () => {

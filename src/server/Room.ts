@@ -1,17 +1,22 @@
 'use strict';
 
+import Piece from "./Piece";
 import Player from "./Player";
+import shapes from "./shapes";
+import Vector2D from "./Vector2D";
 
 export default class {
   name: string;
   phase: 'preparation' | 'game';
   players: Player[];
   host?: Player;
+  pieceQueue: Piece[];
 
   constructor(name: string) {
     this.name = name;
     this.phase = 'preparation';
     this.players = [];
+    this.pieceQueue = [];
   }
 
   addPlayer(player: Player) {
@@ -40,8 +45,37 @@ export default class {
   startGame() {
     this.phase = 'game';
 
-    for (const receiver of this.players)
-      receiver.socket.emit('StartGame');
+    this.pieceQueue = [];
+
+    for (const player of this.players)
+    {
+      player.piece = null;
+      player.pieceId = null;
+      player.pieceQueueId = null;
+
+      player.socket.emit('StartGame');
+
+      for (let i = 0; i < 3; i++)
+        player.emitNextPiece();
+
+      player.spawnNextPiece();
+    }
+  }
+
+  chooseNextPiece() {
+    const shapeId = Math.floor(Math.random() * shapes.length);
+    const piece = shapes[shapeId].clone();
+
+    const bottom = Math.max(...piece.blocks.map(block => block.y));
+    piece.translate(new Vector2D(10 / 2 - piece.center.x, -0.5 - bottom));
+
+    this.pieceQueue.push(piece);
+  }
+
+  getPieceFromQueue(id: number) {
+    while (id >= this.pieceQueue.length)
+      this.chooseNextPiece();
+    return this.pieceQueue[id];
   }
 
   emitState(player: Player) {
