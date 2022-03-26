@@ -10,6 +10,6 @@ interface BlockProps {
 
 export default ({ filled }: BlockProps) => {
   return filled ?
-    <div className="block"></div> :
-    <div></div>;
+    <div className="full-block"></div> :
+    <div className="empty-block"></div>;
 };

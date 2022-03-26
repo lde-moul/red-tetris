@@ -12,7 +12,12 @@ body {
   grid-template-rows: repeat(20, 1fr);
 }
 
-.block {
+.empty-block {
+  background: lightgrey;
+  border: 1vmin outset lightgrey;
+}
+
+.full-block {
   background: orangered;
   border: 1vmin outset orangered;
 }
