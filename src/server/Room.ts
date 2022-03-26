@@ -89,6 +89,7 @@ export default class {
       player.score = 0;
       player.numLinesCleared = 0;
       player.lateness = 0;
+      player.desynchronised = false;
       player.resynchronising = false;
 
       player.board = new Board(new Vector2D(10, 20));
@@ -113,6 +114,9 @@ export default class {
     const timeStep = Date.now() - this.lastTick;
 
     for (const player of this.players) {
+      if (player.lost)
+        continue;
+
       player.lateness += timeStep;
 
       if (player.lateness >= 3000)
