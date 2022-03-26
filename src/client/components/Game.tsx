@@ -2,8 +2,8 @@
 
 import Board from './Board';
 import handleGameKeyDown from '../handleGameKeyDown';
+import handleGameTick from '../handleGameTick';
 import HUD from './HUD';
-import { movePiece } from '../Piece';
 import { useTracked } from '../state';
 import '../../../styles.css';
 
@@ -16,12 +16,8 @@ export default () => {
   const handleKeyDown = (event: KeyboardEvent) =>
     setState(prev => handleGameKeyDown(event, prev));
 
-  const handleTick = () => {
-    setState(prev => produce(prev, draft => {
-      if (draft.room.player.piece)
-        draft.room.player = movePiece(draft.room.player, { x: 0, y: 1 }, prev.socket);
-    }));
-  };
+  const handleTick = () =>
+    setState(prev => handleGameTick(prev));
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
