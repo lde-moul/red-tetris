@@ -35,6 +35,9 @@ const initializeSocket = (state: State, setState: StateSetter) => {
         return;
 
       draft.room.players.push({ name });
+
+      if (name == draft.playerName)
+        draft.room.player = { name: draft.playerName };
     }));
   });
 
@@ -58,25 +61,17 @@ const initializeSocket = (state: State, setState: StateSetter) => {
   state.socket.on('StartGame', () => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'Game';
-
-      const board = getEmptyBoard();
-
-      draft.room.players.forEach(player => {
-        player.board = board;
-        player.pieceQueue = [];
-      });
+      draft.room.player.board = getEmptyBoard();
+      draft.room.player.pieceQueue = [];
     }));
   });
 
   state.socket.on('NextPiece', (piece: Piece) => {
     setState(prev => produce(prev, draft => {
-      let playerId = draft.room.players.findIndex(player => player.name == draft.playerName);
-      let player = draft.room.players[playerId];
+      draft.room.player.pieceQueue.push(piece);
 
-      player.pieceQueue.push(piece);
-
-      if (!player.piece)
-        draft.room.players[playerId] = spawnNextPiece(player);
+      if (!draft.room.player.piece)
+        draft.room.player = spawnNextPiece(draft.room.player);
     }));
   });
 };

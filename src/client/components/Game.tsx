@@ -17,11 +17,8 @@ export default () => {
 
   const handleTick = () => {
     setState(prev => produce(prev, draft => {
-      const playerId = draft.room.players.findIndex(player => player.name == draft.playerName);
-      const player = draft.room.players[playerId];
-
-      if (player.piece)
-        draft.room.players[playerId] = movePiece(player, { x: 0, y: 1 }, prev.socket);
+      if (draft.room.player.piece)
+        draft.room.player = movePiece(draft.room.player, { x: 0, y: 1 }, prev.socket);
     }));
   };
 
@@ -35,10 +32,8 @@ export default () => {
     };
   }, []);
 
-  const player = state.room.players.find(player => player.name == state.playerName);
-
   let board = [];
-  for (const line of player.board.slice(4))
+  for (const line of state.room.player.board.slice(4))
     for (const filled of line)
       board.push(<Block filled={filled} />);
 

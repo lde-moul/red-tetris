@@ -7,28 +7,25 @@ import { State } from './state';
 import produce from 'immer';
 
 export default (event: KeyboardEvent, state: State): State => {
-  const playerId = state.room.players.findIndex(player => player.name == state.playerName);
-  const player = state.room.players[playerId];
-
-  if (!player.piece)
+  if (!state.room.player.piece)
     return state;
 
   switch (event.key) {
     case 'ArrowDown':
       return produce(state, draft => {
-        draft.room.players[playerId] = movePiece(player, { x: 0, y: 1 }, state.socket);
+        draft.room.player = movePiece(state.room.player, { x: 0, y: 1 }, state.socket);
       });
     case 'ArrowLeft':
       return produce(state, draft => {
-        draft.room.players[playerId] = movePiece(player, { x: -1, y: 0 }, state.socket);
+        draft.room.player = movePiece(state.room.player, { x: -1, y: 0 }, state.socket);
       });
     case 'ArrowRight':
       return produce(state, draft => {
-        draft.room.players[playerId] = movePiece(player, { x: 1, y: 0 }, state.socket);
+        draft.room.player = movePiece(state.room.player, { x: 1, y: 0 }, state.socket);
       });
     case 'ArrowUp':
       return produce(state, draft => {
-        const player = draft.room.players[playerId];
+        const player = draft.room.player;
 
         state.socket.emit('RotatePiece');
 
