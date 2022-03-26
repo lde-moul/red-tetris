@@ -60,31 +60,10 @@ export const rotatePieceAction = (player: LocalPlayer, socket: Socket): LocalPla
 export const dropPieceAction = (player: LocalPlayer, tick: number, socket: Socket): LocalPlayer => {
   socket.emit('DropPiece');
 
-  let droppedPiece = player.piece;
+  const offset = { x: 0, y: 1 };
 
-  while (true) {
-    const movedPiece = translatePiece(droppedPiece, { x: 0, y: 1 });
+  while (canPieceBeHere(translatePiece(player.piece, offset), player.board))
+    player = movePiece(player, offset, socket);
 
-    if (!canPieceBeHere(movedPiece, player.board))
-      break;
-
-    droppedPiece = movedPiece;
-  }
-
-  const droppedPlayer: LocalPlayer = {
-    ...player,
-    fallTick: tick
-  };
-
-  if (isPieceOverflowing(droppedPiece, droppedPlayer.board))
-    return {
-      ...droppedPlayer,
-      piece: null,
-      board: attachPieceToBoard(droppedPiece, droppedPlayer.board)
-    };
-  else
-    return spawnNextPiece({
-      ...droppedPlayer,
-      board: clearFullLines(attachPieceToBoard(droppedPiece, droppedPlayer.board))
-    });
+  return movePiece({ ...player, fallTick: tick }, offset, socket);
 };
