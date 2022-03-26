@@ -1,8 +1,8 @@
 'use strict';
 
-import { BlockType } from "./Board";
-import Piece from "./Piece";
-import Vector2D from "./Vector2D";
+import { BlockType } from './Board';
+import Piece from './Piece';
+import Vector2D from './Vector2D';
 
 export default [
   {

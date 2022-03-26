@@ -1,10 +1,10 @@
 'use strict';
 
-import Board from "./Board";
-import Piece from "./Piece";
-import Player from "./Player";
-import shapes from "./shapes";
-import Vector2D from "./Vector2D";
+import Board from './Board';
+import Piece from './Piece';
+import Player from './Player';
+import shapes from './shapes';
+import Vector2D from './Vector2D';
 
 export default class {
   name: string;

@@ -1,12 +1,12 @@
 'use strict';
 
+import Board from './Board';
 import { attachPieceToBoard, getEmptyBoard } from '../Board';
 import Piece, { translatePiece } from '../Piece';
 import '../../../css/board.css';
 import '../../../css/game.css';
 
 import React from 'react';
-import Board from './Board';
 
 interface PieceQueueProps {
   pieceQueue: Piece[];

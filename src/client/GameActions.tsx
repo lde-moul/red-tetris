@@ -1,8 +1,7 @@
 'use strict';
 
-import { attachPieceToBoard, clearFullLines } from './Board';
 import LocalPlayer from './LocalPlayer';
-import { canPieceBeHere, isPieceOverflowing, movePiece, rotatePiece, spawnNextPiece, translatePiece } from './Piece';
+import { canPieceBeHere, movePiece, rotatePiece, translatePiece } from './Piece';
 import Vector2D from './Vector2D';
 
 import { Socket } from 'socket.io-client';

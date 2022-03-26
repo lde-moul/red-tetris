@@ -1,7 +1,7 @@
 'use strict';
 
-import Board, { getEmptyBoard } from "./Board";
-import Piece from "./Piece";
+import Board, { getEmptyBoard } from './Board';
+import Piece from './Piece';
 
 export default interface LocalPlayer {
   board?: Board;

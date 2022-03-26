@@ -1,8 +1,8 @@
 'use strict';
 
-import { BlockType } from "./Board";
-import Player from "./Player";
-import Vector2D from "./Vector2D";
+import { BlockType } from './Board';
+import Player from './Player';
+import Vector2D from './Vector2D';
 
 export default class Piece {
   static wallKickOffsets: Vector2D[] = [

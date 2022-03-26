@@ -1,7 +1,7 @@
 'use strict';
 
-import Piece from "./Piece";
-import Vector2D from "./Vector2D";
+import Piece from './Piece';
+import Vector2D from './Vector2D';
 
 export enum BlockType {
   Empty,

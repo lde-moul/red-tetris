@@ -1,11 +1,11 @@
 'use strict';
 
-import Player from "./Player";
-import Room from "./Room";
-import Vector2D from "./Vector2D";
+import Player from './Player';
+import Room from './Room';
+import Vector2D from './Vector2D';
 
-const express = require('express');
-const http = require('http');
+import express from 'express';
+import http from 'http';
 import { Server, Socket } from 'socket.io';
 
 export default class RedTetrisServer {

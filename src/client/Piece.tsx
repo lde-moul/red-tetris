@@ -1,10 +1,8 @@
 'use strict';
 
-import Board, { attachPieceToBoard, BlockType, clearFullLines, isBoardBlockEmpty, isPositionInsideBoard } from "./Board";
-import Player from "./LocalPlayer";
-import Vector2D, { add2DVectors, rotatePoint } from "./Vector2D";
-
-import { Socket } from "socket.io-client";
+import Board, { attachPieceToBoard, BlockType, clearFullLines, isBoardBlockEmpty, isPositionInsideBoard } from './Board';
+import Player from './LocalPlayer';
+import Vector2D, { add2DVectors, rotatePoint } from './Vector2D';
 
 export default interface Piece {
   blocks: Vector2D[];

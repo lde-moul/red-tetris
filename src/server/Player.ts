@@ -1,12 +1,12 @@
 'use strict';
 
-import Board from "./Board";
-import Piece from "./Piece";
-import Player from "./Player";
-import Room from "./Room";
-import Vector2D from "./Vector2D";
+import Board from './Board';
+import Piece from './Piece';
+import Player from './Player';
+import Room from './Room';
+import Vector2D from './Vector2D';
 
-import { Socket } from "socket.io";
+import { Socket } from 'socket.io';
 
 export default class {
   socket: Socket;
