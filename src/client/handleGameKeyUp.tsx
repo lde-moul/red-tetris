@@ -13,15 +13,19 @@ export default (event: KeyboardEvent, state: State): State =>
 
     switch (event.key) {
       case 'ArrowDown':
+      case 'Down':
         player.downPressTick = null;
         break;
       case 'ArrowLeft':
+      case 'Left':
         player.leftPressTick = null;
         break;
       case 'ArrowRight':
+      case 'Right':
         player.rightPressTick = null;
         break;
       case 'ArrowUp':
+      case 'Up':
         player.upPressTick = null;
         break;
     }
