@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const http = require('http');
 import Player from './Player';
