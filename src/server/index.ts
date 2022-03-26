@@ -95,6 +95,9 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('CreateRoom', (name: string) => {
+    if (player.room)
+      return;
+
     name = name.trim();
 
     if (!name.match(NAME_PATTERN))
