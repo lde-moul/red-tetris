@@ -46,6 +46,15 @@ export default (state: State, setState: StateSetter) => {
     }));
   });
 
+  state.socket.on('SetHost', (name?: string) => {
+    setState(prev => produce(prev, draft => {
+      if (!draft.room)
+        return;
+
+      draft.room.hostName = name;
+    }));
+  });
+
   state.socket.on('RoomState', (room: Room) => {
     setState(prev => produce(prev, draft => {
       draft.room = room;

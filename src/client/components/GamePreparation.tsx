@@ -14,12 +14,16 @@ export default () => {
     state.socket.emit('StartGame');
   };
 
+  const startButton = (state.playerName !== state.room.hostName) ? null : (
+    <button type="button" onClick={() => handleStart()}>
+      Start
+    </button>
+  );
+
   return (
     <div>
-      <PlayerList names={names} />
-      <button type="button" onClick={() => handleStart()}>
-        Start
-      </button>
+      <PlayerList names={names} hostName={state.room.hostName} />
+      {startButton}
     </div>
   );
 };

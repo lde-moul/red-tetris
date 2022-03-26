@@ -8,4 +8,5 @@ export default interface Room {
   tick: number;
   player: LocalPlayer;
   players: Player[];
+  hostName?: string;
 };

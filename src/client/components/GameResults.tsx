@@ -14,13 +14,16 @@ export default () => {
 
   const winner = state.room.players.find(player => !player.lost);
 
+  const restartButton = (state.playerName !== state.room.hostName) ? null : (
+    <button type="button" onClick={() => handleRestart()}>
+      Restart
+    </button>
+  );
+
   return (
     <div>
       { winner ? (winner.name + ' won the round!') : 'Game over' }
-
-      <button type="button" onClick={() => handleRestart()}>
-        Restart
-      </button>
+      {restartButton}
     </div>
   );
 };
