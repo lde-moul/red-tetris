@@ -64,6 +64,12 @@ const initializeSocket = (state: State, setState: StateSetter) => {
 
       draft.room.player.board = getEmptyBoard({ x: 10, y: 20 });
       draft.room.player.pieceQueue = [];
+      draft.room.player.fallTick = null;
+
+      draft.room.player. leftPressTick = null;
+      draft.room.player.rightPressTick = null;
+      draft.room.player.   upPressTick = null;
+      draft.room.player. downPressTick = null;
 
       draft.room.players.forEach(player => {
         player.spectrum = new Array(10).fill(0);

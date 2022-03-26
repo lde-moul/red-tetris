@@ -2,6 +2,7 @@
 
 import Board from './Board';
 import handleGameKeyDown from '../handleGameKeyDown';
+import handleGameKeyUp from '../handleGameKeyUp';
 import handleGameTick from '../handleGameTick';
 import HUD from './HUD';
 import { useTracked } from '../state';
@@ -18,15 +19,26 @@ export default () => {
       setState(prev => handleGameKeyDown(event, prev));
   };
 
+  const handleKeyUp = (event: KeyboardEvent) => {
+    if (!event.repeat)
+      setState(prev => handleGameKeyUp(event, prev));
+  };
+
   const handleTick = () =>
     setState(prev => handleGameTick(prev));
 
   useEffect(() => {
+    setState(prev => produce(state, draft => {
+      draft.room.tick = 0;
+    }));
+
     document.addEventListener('keydown', handleKeyDown);
-    const ticker = setInterval(handleTick, 500);
+    document.addEventListener('keyup', handleKeyUp);
+    const ticker = setInterval(handleTick, 100);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keyup', handleKeyUp);
       clearInterval(ticker);
     };
   }, []);
