@@ -10,10 +10,10 @@ export default interface Player {
   pieceQueue?: Piece[];
 };
 
-export const isPositionInsideBoard = (pos: Vector2D) =>
+export const isPositionInsideBoard = (pos: Vector2D): boolean =>
   pos.x >= 0 && pos.x < 10 && pos.y >= 0 && pos.y < 20 + 4;
 
-export const getEmptyBoard = () => {
+export const getEmptyBoard = (): boolean[][] => {
   let board: boolean[][] = [];
 
   for (let y = 0; y < 20 + 4; y++) {
@@ -34,7 +34,7 @@ export const isBoardBlockFilled = (board: boolean[][], pos: Vector2D): boolean =
 export const isBoardBlockEmpty = (board: boolean[][], pos: Vector2D): boolean =>
   !isBoardBlockFilled(board, pos);
 
-export const setBoardBlock = (board: boolean[][], pos: Vector2D, filled: boolean) => {
+export const setBoardBlock = (board: boolean[][], pos: Vector2D, filled: boolean): boolean[][] => {
   pos = floor2DVector(pos);
 
   if (isPositionInsideBoard(pos)) {
@@ -46,14 +46,14 @@ export const setBoardBlock = (board: boolean[][], pos: Vector2D, filled: boolean
   return board;
 };
 
-const attachOrDetach = (piece: Piece, board: boolean[][], attaching: boolean) =>
+const attachOrDetach = (piece: Piece, board: boolean[][], attaching: boolean): boolean[][] =>
   piece.blocks.reduce(
     (board, block) => setBoardBlock(board, block, attaching),
     board
   );
 
-export const attachPieceToBoard = (piece: Piece, board: boolean[][]) =>
+export const attachPieceToBoard = (piece: Piece, board: boolean[][]): boolean[][] =>
   attachOrDetach(piece, board, true);
 
-export const detachPieceFromBoard = (piece: Piece, board: boolean[][]) =>
+export const detachPieceFromBoard = (piece: Piece, board: boolean[][]): boolean[][] =>
   attachOrDetach(piece, board, false);

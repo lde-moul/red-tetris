@@ -75,7 +75,7 @@ export default class {
     this.pieceQueue.push(piece);
   }
 
-  getPieceFromQueue(id: number) {
+  getPieceFromQueue(id: number): Piece {
     while (id >= this.pieceQueue.length)
       this.chooseNextPiece();
     return this.pieceQueue[id];

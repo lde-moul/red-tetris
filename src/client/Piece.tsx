@@ -10,7 +10,7 @@ export default interface Piece {
   center: Vector2D;
 };
 
-export const translatePiece = (piece: Piece, offset: Vector2D) => ({
+export const translatePiece = (piece: Piece, offset: Vector2D): Piece => ({
   blocks: piece.blocks.map(block => add2DVectors(block, offset)),
   center: add2DVectors(piece.center, offset)
 });

@@ -17,7 +17,7 @@ export default class {
     }
   }
 
-  isPositionInside (pos: Vector2D) {
+  isPositionInside (pos: Vector2D): boolean {
     return pos.x >= 0 && pos.x < 10 && pos.y >= 0 && pos.y < 20 + 4;
   }
 

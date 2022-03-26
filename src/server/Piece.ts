@@ -14,7 +14,7 @@ export default class Piece {
     this.player = player;
   }
 
-  clone() {
+  clone(): Piece {
     return new Piece(
       this.blocks.map(block => block.clone()),
       this.center.clone(),
