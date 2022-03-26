@@ -6,7 +6,7 @@ import shapes from '../../src/server/shapes';
 
 import assert from 'assert';
 
-describe('Piece', function() {
+describe('Client piece', function() {
   const getShape = (id: number): Piece => ({
     blocks: shapes[id].blocks,
     center: shapes[id].center,
@@ -45,7 +45,7 @@ describe('Piece', function() {
     assert.deepStrictEqual(rotatePiece(piece), expected);
   });
 
-  it("should make the piece collide when it's inside the board", () => {
+  it("should make the piece not collide when it's inside the board", () => {
     assert(canPieceBeHere(getShape(3), getEmptyBoard({ x: 10, y: 20 })));
   });
 

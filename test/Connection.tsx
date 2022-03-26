@@ -1,6 +1,6 @@
 'use strict';
 
-import { createClient, setExpectedMessages, TestClient, waitForMessage } from './ClientTesting';
+import { assertMessagesEmittedToClients, createClient, setExpectedMessages, TestClient, waitForMessage } from './ClientTesting';
 import RedTetrisServer from '../src/server/RedTetrisServer';
 
 import assert from 'assert';
@@ -16,7 +16,7 @@ describe('Connection', function() {
     clients = Array.from(Array(2), createClient);
   });
 
-  after(async function() {
+  after(function() {
     clients.forEach(client => client.socket.disconnect());
     server.close();
   });
@@ -76,21 +76,11 @@ describe('Connection', function() {
 
   it('should change the host if the host picks a new one', async function() {
     clients[1].socket.emit('ChangeHost', 'Test User');
-
-    setExpectedMessages(clients[0], 'SetHost');
-    setExpectedMessages(clients[1], 'SetHost');
-
-    await waitForMessage(clients[0], 'SetHost');
-    await waitForMessage(clients[1], 'SetHost');
+    await assertMessagesEmittedToClients(clients, 'SetHost');
   });
 
   it('should start a new game when the host decides to', async function() {
     clients[0].socket.emit('StartGame');
-
-    setExpectedMessages(clients[0], 'StartGame');
-    setExpectedMessages(clients[1], 'StartGame');
-
-    await waitForMessage(clients[0], 'StartGame');
-    await waitForMessage(clients[1], 'StartGame');
+    await assertMessagesEmittedToClients(clients, 'StartGame', 'NextPiece');
   });
 })

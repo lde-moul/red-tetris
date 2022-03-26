@@ -1,6 +1,6 @@
 'use strict';
 
-import { createClient, setExpectedMessages, TestClient, waitForMessage } from './ClientTesting';
+import { assertMessagesEmittedToClients, createClient, setExpectedMessages, TestClient, waitForMessage } from './ClientTesting';
 import { BlockType } from '../src/client/Board';
 import Board from '../src/server/Board';
 import RedTetrisServer from '../src/server/RedTetrisServer';
@@ -12,15 +12,6 @@ import assert from 'assert';
 describe('Game communication', function() {
   let clients: TestClient[];
   let server: RedTetrisServer;
-
-  const assertMessagesEmittedToEveryone = async (...types: string[]) => {
-    for (const client of clients)
-      setExpectedMessages(client, ...types);
-
-    for (const type of types)
-      for (const client of clients)
-        await waitForMessage(client, type);
-  };
 
   const fillBoard = (board: Board, type: BlockType) => {
     for (let y = 0; y < board.size.y; y++)
@@ -55,12 +46,12 @@ describe('Game communication', function() {
     for (let i = 0; i < 21; i++)
       clients[0].socket.emit('MovePiece', { x: 0, y: 1 });
 
-    await assertMessagesEmittedToEveryone('Spectrum');
+    await assertMessagesEmittedToClients(clients, 'Spectrum');
   });
 
   it('should emit the new spectrum to all players when a piece lands from dropping', async function() {
     clients[0].socket.emit('DropPiece');
-    await assertMessagesEmittedToEveryone('Spectrum');
+    await assertMessagesEmittedToClients(clients, 'Spectrum');
   });
 
   it('should emit 3 malus lines to the opponent when a player completes 4 lines', async function() {
@@ -85,6 +76,6 @@ describe('Game communication', function() {
   it('should notify all players when the last player loses', async function() {
     fillBoard(server.rooms[0].players[0].board, BlockType.Malus);
     clients[0].socket.emit('MovePiece', { x: 0, y: 1 });
-    await assertMessagesEmittedToEveryone('PlayerLost', 'EndGame');
+    await assertMessagesEmittedToClients(clients, 'PlayerLost', 'EndGame');
   });
 })

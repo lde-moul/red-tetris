@@ -66,3 +66,12 @@ export const waitForMessage = (client: TestClient, type: string) => {
     }
   });
 };
+
+export const assertMessagesEmittedToClients = async (clients: TestClient[], ...types: string[]) => {
+  for (const client of clients)
+    setExpectedMessages(client, ...types);
+
+  for (const type of types)
+    for (const client of clients)
+      await waitForMessage(client, type);
+};

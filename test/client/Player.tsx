@@ -14,7 +14,7 @@ const getTestBoard = (blocks: number[][], numMalusLines: number = 0): Board => {
     board = setBoardBlock(board, pos, type);
   });
   return board;
-}
+};
 
 describe('Board', function() {
   it('should return a 10x20 empty board', () => {
