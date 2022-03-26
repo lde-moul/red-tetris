@@ -3,10 +3,10 @@
 import { Socket } from 'socket.io-client';
 
 interface State {
-    socket: Socket;
+  socket: Socket;
 
-    pageId : string,
-    setPageId : Function,
+  pageId: string;
+  setPageId: Function;
 }
 
 export default {} as State;
