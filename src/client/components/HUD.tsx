@@ -12,7 +12,7 @@ interface HUDProps {
 
 export default ({ players }: HUDProps) => {
   const playerInfos = players.map(player =>
-    <PlayerInfo player={player} />
+    <PlayerInfo player={player} numPlayers={players.length} />
   );
 
   return (
