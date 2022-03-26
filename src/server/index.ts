@@ -12,6 +12,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+const NAME_PATTERN = /^[\w +*/%^()=<>:,;.!?'"~@#$&-]{1,20}$/;
+
 const port = process.env.PORT;
 
 let players: Player[] = [];
@@ -54,8 +56,7 @@ io.on('connection', (socket: Socket) => {
   socket.on('CreatePlayer', (name: string) => {
     name = name.trim();
 
-    const pattern = /^[\w +*/%^()=<>:,;.!?'"~@#$&-]{1,20}$/;
-    if (!name.match(pattern))
+    if (!name.match(NAME_PATTERN))
       return;
 
     const exists = players.find(player => player.name.toLowerCase() === name.toLowerCase());
@@ -85,6 +86,17 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('CreateRoom', (name: string) => {
+    name = name.trim();
+
+    if (!name.match(NAME_PATTERN))
+      return;
+
+    const exists = rooms.find(room => room.name.toLowerCase() === name.toLowerCase());
+    if (exists) {
+      socket.emit('RoomNameExists');
+      return;
+    }
+
     let room = new Room(name);
     rooms.push(room);
 
