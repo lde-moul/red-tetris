@@ -1,25 +1,26 @@
 'use strict';
 
 import PlayerCreation from './PlayerCreation';
+import state from './state';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import io, { Socket } from 'socket.io-client';
 
-let socket: Socket = io();
+state.socket = io();
 
 function App()
 {
-  const [pageId, setPageId] = useState('PlayerCreation');
+  [state.pageId, state.setPageId] = useState('PlayerCreation');
 
   let Page;
-  switch (pageId)
+  switch (state.pageId)
   {
   case 'PlayerCreation':
     Page = PlayerCreation;
     break;
   }
 
-  return <Page setPageId={setPageId} socket={socket} />;
+  return <Page />;
 }
 
 ReactDOM.render(

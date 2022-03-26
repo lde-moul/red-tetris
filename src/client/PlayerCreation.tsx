@@ -1,9 +1,10 @@
 'use strict';
 
+import state from './state';
 import React, { useState } from 'react';
 import "../../styles.css";
 
-export default ({ setPageId, socket }) =>
+export default () =>
 {
   const [name, setName] = useState('Player name');
 
