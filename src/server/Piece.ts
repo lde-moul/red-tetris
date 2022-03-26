@@ -28,7 +28,7 @@ export default class Piece {
 
     this.blocks = this.blocks.map(block => new Vector2D(
       center.x - (block.y - center.y),
-      center.y - (block.x - center.x),
+      center.y + (block.x - center.x),
     ));
   }
 };
