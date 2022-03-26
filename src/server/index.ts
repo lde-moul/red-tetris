@@ -1,5 +1,10 @@
 const express = require('express');
+const http = require('http');
+import { Server, Socket } from 'socket.io';
+
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 const port = process.env.PORT;
 
@@ -15,6 +20,11 @@ app.get('*', (req, res) => {
     sendFile(res, 'index.html');
 })
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+io.on('connection', (socket: Socket) => {
+  socket.on('disconnect', () => {
+  })
+});
+
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });

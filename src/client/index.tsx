@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import CreatePlayer from './CreatePlayer';
+import io from 'socket.io-client';
+
+let socket = io();
 
 function App()
 {
