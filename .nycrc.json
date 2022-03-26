@@ -1,0 +1,6 @@
+{
+  "include": "src",
+  "all": true,
+  "require": ["ts-node/register"],
+  "reporter": ["text", "lcov", "html"]
+}

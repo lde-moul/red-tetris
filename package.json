@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "start": "npm run server",
-    "server": "ts-node src/server/index.ts"
+    "server": "ts-node src/server/index.ts",
+    "test": "mocha",
+    "coverage": "NODE_ENV=test nyc mocha"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -18,10 +20,14 @@
     "webpack-dev-server": "^3.11.2"
   },
   "devDependencies": {
+    "@types/mocha": "^9.0.0",
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.7",
     "@types/react-dom": "^17.0.5",
     "css-loader": "^5.2.6",
+    "mocha": "^9.1.1",
+    "nyc": "^15.1.0",
+    "source-map-support": "^0.5.20",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.1.0",
     "webpack": "^5.28.0",
