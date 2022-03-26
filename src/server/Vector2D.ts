@@ -21,10 +21,21 @@ export default class Vector2D {
     return new Vector2D(Math.floor(this.x), Math.floor(this.y));
   }
 
-  rotateAroundPoint(center: Vector2D): Vector2D {
+  opposite(): Vector2D {
+    return new Vector2D(-this.x, -this.y);
+  }
+
+  rotateAroundPointCW(center: Vector2D): Vector2D {
     return new Vector2D(
       center.x - (this.y - center.y),
       center.y + (this.x - center.x)
+    );
+  }
+
+  rotateAroundPointCCW(center: Vector2D): Vector2D {
+    return new Vector2D(
+      center.x + (this.y - center.y),
+      center.y - (this.x - center.x)
     );
   }
 };
