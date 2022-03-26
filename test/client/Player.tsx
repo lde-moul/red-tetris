@@ -10,7 +10,8 @@ describe('Board', function() {
   it('should return a 10x20 empty board', () => {
     const l = [false, false, false, false, false, false, false, false, false, false];
     const expected = {
-      blocks: [l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l]
+      blocks: [l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l],
+      size: { x: 10, y: 20 }
     };
 
     assert.deepStrictEqual(getEmptyBoard({ x: 10, y: 20 }), expected);
