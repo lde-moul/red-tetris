@@ -41,9 +41,4 @@ export default class {
     for (const block of piece.blocks)
       this.setBlock(block, true);
   }
-
-  detachPiece(piece: Piece) {
-    for (const block of piece.blocks)
-      this.setBlock(block, false);
-  }
 }

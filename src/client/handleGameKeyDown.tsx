@@ -17,19 +17,21 @@ export default (event: KeyboardEvent, state: State): State => {
   {
   case 'ArrowDown':
     return produce(state, draft => {
-      draft.room.players[playerId] = movePiece(player, { x: 0, y: 1 });
+      draft.room.players[playerId] = movePiece(player, { x: 0, y: 1 }, state.socket);
     });
   case 'ArrowLeft':
     return produce(state, draft => {
-      draft.room.players[playerId] = movePiece(player, { x: -1, y: 0 });
+      draft.room.players[playerId] = movePiece(player, { x: -1, y: 0 }, state.socket);
     });
   case 'ArrowRight':
     return produce(state, draft => {
-      draft.room.players[playerId] = movePiece(player, { x: 1, y: 0 });
+      draft.room.players[playerId] = movePiece(player, { x: 1, y: 0 }, state.socket);
     });
   case 'ArrowUp':
     return produce(state, draft => {
-      const player = draft.room.players.find(player => player.name == draft.playerName);
+      const player = draft.room.players[playerId];
+
+      state.socket.emit('RotatePiece');
 
       player.board = detachPieceFromBoard(player.piece, player.board);
 

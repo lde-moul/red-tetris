@@ -2,6 +2,7 @@
 
 import Player from './Player';
 import Room from './Room';
+import Vector2D from './Vector2D';
 
 const express = require('express');
 const http = require('http');
@@ -79,6 +80,39 @@ io.on('connection', (socket: Socket) => {
       return;
 
     room.startGame();
+  });
+
+  socket.on('MovePiece', (offset: Vector2D) => {
+    if (!player.piece)
+      return;
+
+    let piece = player.piece;
+
+    offset = new Vector2D(offset.x, offset.y);
+
+    const validOffsets = [-1, 0, 1];
+    if (!(validOffsets.includes(offset.x) && validOffsets.includes(offset.y)))
+      return;
+
+    piece.translate(offset);
+
+    if (!piece.canBeHere())
+    {
+      piece.translate(offset.opposite());
+
+      if (offset.y > 0)
+        player.board.attachPiece(piece);
+    }
+  });
+
+  socket.on('RotatePiece', () => {
+    if (!player.piece)
+      return;
+
+    player.piece.rotateCW();
+
+    if (!player.piece.canBeHere())
+      player.piece.rotateCCW();
   });
 });
 

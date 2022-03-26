@@ -1,5 +1,6 @@
 'use strict';
 
+import Board from "./Board";
 import Piece from "./Piece";
 import Room from "./Room";
 
@@ -9,6 +10,7 @@ export default class {
   socket: Socket;
   name: string;
   room?: Room;
+  board?: Board;
   piece?: Piece;
   pieceId?: number;
   pieceQueueId?: number;
@@ -29,5 +31,14 @@ export default class {
   }
 
   spawnNextPiece() {
+    this.emitNextPiece();
+
+    if (this.pieceId === null)
+      this.pieceId = 0;
+    else
+      this.pieceId++;
+
+    this.piece = this.room.getPieceFromQueue(this.pieceId).clone();
+    this.piece.player = this;
   }
 }

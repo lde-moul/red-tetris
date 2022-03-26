@@ -1,5 +1,6 @@
 'use strict';
 
+import Board from "./Board";
 import Piece from "./Piece";
 import Player from "./Player";
 import shapes from "./shapes";
@@ -49,6 +50,8 @@ export default class {
 
     for (const player of this.players)
     {
+      player.board = new Board();
+
       player.piece = null;
       player.pieceId = null;
       player.pieceQueueId = null;
