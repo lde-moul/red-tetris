@@ -101,7 +101,10 @@ io.on('connection', (socket: Socket) => {
       piece.translate(offset.opposite());
 
       if (offset.y > 0)
+      {
         player.board.attachPiece(piece);
+        player.spawnNextPiece();
+      }
     }
   });
 

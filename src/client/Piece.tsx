@@ -26,7 +26,7 @@ export const canPieceBeHere = (piece: Piece, board: boolean[][]): boolean =>
 export const spawnNextPiece = (player: Player): Player =>
   {
     const pieceQueue = [...player.pieceQueue];
-    const piece = pieceQueue.shift();
+    const piece = pieceQueue.shift() ?? null;
 
     return { ...player, piece, pieceQueue };
   };
@@ -43,6 +43,8 @@ export const movePiece = (player: Player, offset: Vector2D, socket: Socket): Pla
       piece: movedPiece,
       board: attachPieceToBoard(movedPiece, boardWithoutPiece)
     };
+  else if (offset.y > 0)
+    return spawnNextPiece(player);
   else
     return player;
 };
