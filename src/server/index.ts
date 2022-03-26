@@ -30,7 +30,7 @@ const leaveRoom = (player: Player) => {
 
       for (const receiver of players)
         receiver.socket.emit('RoomNames', rooms.map(room => room.name));
-}
+    }
   }
 };
 
@@ -82,6 +82,15 @@ io.on('connection', (socket: Socket) => {
 
     for (const receiver of players)
       receiver.socket.emit('RoomNames', rooms.map(room => room.name));
+  });
+
+  socket.on('ChangeHost', (name: string) => {
+    if (!player.room)
+      return;
+
+    const host = player.room.players.find(player => player.name == name);
+    if (host)
+      player.room.setHost(host);
   });
 
   socket.on('StartGame', () => {
