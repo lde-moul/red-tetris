@@ -47,9 +47,9 @@ export default class {
   }
 
   moveDownAllLinesAbove(limit: number) {
-    for (let y = 0; y < limit; y++)
+    for (let y = limit; y > 0; y--)
       for (let x = 0; x < this.blocks[y].length; x++)
-        this.blocks[y + 1][x] = this.blocks[y][x];
+        this.blocks[y][x] = this.blocks[y - 1][x];
 
     for (let x = 0; x < this.blocks[0].length; x++)
       this.blocks[0][x] = false;
