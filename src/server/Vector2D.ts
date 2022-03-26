@@ -16,4 +16,15 @@ export default class Vector2D {
   add(other: Vector2D) {
     return new Vector2D(this.x + other.x, this.y + other.y);
   }
+
+  floor(): Vector2D {
+    return new Vector2D(Math.floor(this.x), Math.floor(this.y));
+  }
+
+  rotateAroundPoint(center: Vector2D): Vector2D {
+    return new Vector2D(
+      center.x - (this.y - center.y),
+      center.y + (this.x - center.x)
+    );
+  }
 };

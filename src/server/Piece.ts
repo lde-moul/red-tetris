@@ -24,11 +24,6 @@ export default class Piece {
   }
 
   rotate() {
-    const center = this.center;
-
-    this.blocks = this.blocks.map(block => new Vector2D(
-      center.x - (block.y - center.y),
-      center.y + (block.x - center.x),
-    ));
+    this.blocks = this.blocks.map(block => block.rotateAroundPoint(this.center));
   }
 };
