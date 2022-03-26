@@ -23,11 +23,11 @@ const sendFile = (res, path) => {
 
 app.get('/bundle.js', (req, res) => {
   sendFile(res, 'dist/bundle.js');
-})
+});
 
 app.get('*', (req, res) => {
   sendFile(res, 'index.html');
-})
+});
 
 io.on('connection', (socket: Socket) => {
   let player = new Player(socket);
@@ -42,7 +42,7 @@ io.on('connection', (socket: Socket) => {
     }
 
     players.splice(players.indexOf(player), 1);
-  })
+  });
 
   socket.on('CreatePlayer', (name: string) => {
     player.name = name;
