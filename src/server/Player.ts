@@ -4,6 +4,7 @@ import Board from "./Board";
 import Piece from "./Piece";
 import Player from "./Player";
 import Room from "./Room";
+import Vector2D from "./Vector2D";
 
 import { Socket } from "socket.io";
 
@@ -16,6 +17,9 @@ export default class {
   piece?: Piece;
   pieceId?: number;
   pieceQueueId?: number;
+  lateness?: number;
+  desynchronised?: boolean;
+  resynchronising?: boolean;
 
   constructor(socket: Socket) {
     this.socket = socket;
@@ -56,5 +60,18 @@ export default class {
 
     if (this.room.players.filter(player => !player.lost).length <= 1)
       this.room.endGame();
+  }
+
+  catchUpLateTicks() {
+    this.desynchronised = true;
+
+    while (this.lateness >= 500 && this.piece)
+      this.piece.move(new Vector2D(0, 1));
+  }
+
+  resynchronise() {
+    this.desynchronised = false;
+    this.resynchronising = true;
+    this.room.emitState(this);
   }
 }

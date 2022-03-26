@@ -13,12 +13,19 @@ export default class {
   host?: Player;
   pieceQueue: Piece[];
   pickableShapes: Piece[];
+  ticker?: NodeJS.Timeout;
+  lastTick: number;
 
   constructor(name: string) {
     this.name = name;
     this.players = [];
 
     this.startPreparation();
+  }
+
+  destroy() {
+    if (this.ticker)
+      clearInterval(this.ticker);
   }
 
   addPlayer(player: Player) {
@@ -79,6 +86,8 @@ export default class {
 
     for (const player of this.players) {
       player.lost = false;
+      player.lateness = 0;
+      player.resynchronising = false;
 
       player.board = new Board(new Vector2D(10, 20));
 
@@ -93,6 +102,25 @@ export default class {
 
       player.spawnNextPiece();
     }
+
+    this.ticker = setInterval(() => this.handleTick(), 1000);
+    this.lastTick = Date.now();
+  }
+
+  handleTick() {
+    const timeStep = Date.now() - this.lastTick;
+
+    for (const player of this.players) {
+      player.lateness += timeStep;
+
+      if (player.lateness >= 3000)
+        player.catchUpLateTicks();
+
+      if (player.desynchronised && !player.resynchronising)
+        player.resynchronise();
+    }
+
+    this.lastTick = Date.now();
   }
 
   endGame() {
@@ -100,6 +128,8 @@ export default class {
 
     for (const receiver of this.players)
       receiver.socket.emit('EndGame');
+
+    clearInterval(this.ticker);
   }
 
   chooseNextPiece() {
@@ -125,6 +155,20 @@ export default class {
     player.socket.emit('RoomState', {
       name: this.name,
       phase: this.phase,
+      tick: 0,
+      player: !player.room ? null : {
+        board: {
+          blocks: player.board.blocks,
+          size: player.board.size
+        },
+        piece: {
+          blocks: player.piece.blocks,
+          center: player.piece.center,
+          type: player.piece.type
+        },
+        pieceQueue: [],
+        fallTick: 0
+      },
       players: this.players.map(player => {
         return {
           name: player.name,
@@ -134,5 +178,11 @@ export default class {
       }),
       hostName: this.host?.name,
     });
+
+    if (player.room && this.phase === 'game') {
+      player.pieceQueueId = player.pieceId;
+      for (let i = 0; i < 3; i++)
+        player.emitNextPiece();
+    }
   }
 }

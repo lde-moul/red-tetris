@@ -75,11 +75,16 @@ export default (host: string, setState: StateSetter): Socket => {
     setState(prev => produce(prev, draft => {
       draft.room = room;
 
-      draft.pageId = {
-        preparation: 'GamePreparation',
-        game: 'GameJoining',
-        results: 'GameResults',
-      }[room.phase];
+      if (room.phase === 'preparation')
+        draft.pageId = 'GamePreparation';
+      else if (room.phase === 'game') {
+        const inGame = (draft.room.players.find(player => player.name === draft.playerName) !== null);
+        draft.pageId = inGame ? 'Game' : 'GameJoining';
+      }
+      else if (room.phase === 'results')
+        draft.pageId = 'GameResults';
+
+      socket.emit('Resynchronised');
     }));
   });
 

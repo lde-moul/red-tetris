@@ -29,7 +29,7 @@ export default () => {
     setState(prev => handleGameTick(prev));
 
   useEffect(() => {
-    setState(prev => produce(state, draft => {
+    setState(prev => produce(prev, draft => {
       draft.room.tick = 0;
     }));
 

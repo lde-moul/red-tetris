@@ -57,6 +57,9 @@ export default class Piece {
   }
 
   move(offset: Vector2D) {
+    if (offset.y > 0)
+      this.player.lateness = Math.max(this.player.lateness - 500, -1000);
+
     this.translate(offset);
 
     if (!this.canBeHere())
@@ -87,6 +90,8 @@ export default class Piece {
   }
 
   drop() {
+    this.player.lateness = Math.max(this.player.lateness - 500, -1000);
+
     do {
       this.translate(new Vector2D(0, 1));
     } while (this.canBeHere());

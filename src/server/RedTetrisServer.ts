@@ -79,6 +79,8 @@ export default class RedTetrisServer {
     socket.on('RotatePiece', () => this.handleRotatePiece(player));
     socket.on('DropPiece', () => this.handleDropPiece(player));
 
+    socket.on('Resynchronised', () => this.handleResynchronised(player));
+
     player.socket.emit('RoomNames', this.rooms.map(room => room.name));
   }
 
@@ -178,7 +180,7 @@ export default class RedTetrisServer {
   }
 
   handleMovePiece(player: Player, offset: Vector2D) {
-    if (!player.piece)
+    if (player.resynchronising || !player.piece)
       return;
 
     if (!(typeof offset == 'object' && typeof offset.x == 'number' && typeof offset.y == 'number'))
@@ -193,13 +195,17 @@ export default class RedTetrisServer {
   }
 
   handleRotatePiece(player: Player) {
-    if (player.piece)
+    if (!player.resynchronising && player.piece)
       player.piece.turn();
   }
 
   handleDropPiece(player: Player) {
-    if (player.piece)
+    if (!player.resynchronising && player.piece)
       player.piece.drop();
+  }
+
+  handleResynchronised(player: Player) {
+    player.resynchronising = false;
   }
 
   leaveRoom(player: Player) {
@@ -207,6 +213,7 @@ export default class RedTetrisServer {
     if (room) {
       room.removePlayer(player);
       if (room.players.length === 0) {
+        room.destroy();
         this.rooms.splice(this.rooms.indexOf(room), 1);
 
         for (const receiver of this.players)
