@@ -61,8 +61,13 @@ const initializeSocket = (state: State, setState: StateSetter) => {
   state.socket.on('StartGame', () => {
     setState(prev => produce(prev, draft => {
       draft.pageId = 'Game';
+
       draft.room.player.board = getEmptyBoard();
       draft.room.player.pieceQueue = [];
+
+      draft.room.players.forEach(player => {
+        player.spectrum = new Array(10).fill(0);
+      });
     }));
   });
 
@@ -72,6 +77,16 @@ const initializeSocket = (state: State, setState: StateSetter) => {
 
       if (!draft.room.player.piece)
         draft.room.player = spawnNextPiece(draft.room.player);
+    }));
+  });
+
+  state.socket.on('Spectrum', (name: string, spectrum: number[]) => {
+    setState(prev => produce(prev, draft => {
+      if (!draft.room)
+        return;
+
+      const player = draft.room.players.find(player => player.name === name);
+      player.spectrum = spectrum;
     }));
   });
 };

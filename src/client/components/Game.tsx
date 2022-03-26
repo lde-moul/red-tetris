@@ -2,6 +2,7 @@
 
 import Board from './Board';
 import handleGameKeyDown from '../handleGameKeyDown';
+import HUD from './HUD';
 import { movePiece } from '../Piece';
 import { useTracked } from '../state';
 import '../../../styles.css';
@@ -36,7 +37,7 @@ export default () => {
     <div className="game">
       <div className="game-padding"></div>
       <Board board={state.room.player.board} />
-      <div className="hud"></div>
+      <HUD players={state.room.players} />
     </div>
   );
 };

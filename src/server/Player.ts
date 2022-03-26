@@ -2,6 +2,7 @@
 
 import Board from "./Board";
 import Piece from "./Piece";
+import Player from "./Player";
 import Room from "./Room";
 
 import { Socket } from "socket.io";
@@ -40,5 +41,9 @@ export default class {
 
     this.piece = this.room.getPieceFromQueue(this.pieceId).clone();
     this.piece.player = this;
+  }
+
+  emitSpectrum(receiver: Player) {
+    receiver.socket.emit('Spectrum', this.name, this.board.getSpectrum());
   }
 }

@@ -60,4 +60,19 @@ export default class {
       if (this.isLineFull(y))
         this.moveDownAllLinesAbove(y);
   }
+
+  getHighestBlockInColumn(x: number): number {
+    let y: number;
+    for (y = 0; y < this.blocks.length; y++)
+      if (this.blocks[y][x])
+        return y;
+    return y;
+  }
+
+  getSpectrum(): number[] {
+    let spectrum = [];
+    for (let x = 0; x < 10; x++)
+      spectrum[x] = 20 + 4 - this.getHighestBlockInColumn(x);
+    return spectrum;
+  }
 }

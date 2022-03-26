@@ -43,5 +43,8 @@ export default class Piece {
     const board = this.player.board;
     board.attachPiece(this);
     board.clearFullLines();
+
+    for (const receiver of this.player.room.players)
+      this.player.emitSpectrum(receiver);
   }
 };
