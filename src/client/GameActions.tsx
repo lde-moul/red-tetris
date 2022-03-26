@@ -1,6 +1,6 @@
 'use strict';
 
-import { attachPieceToBoard, clearFullLines, detachPieceFromBoard } from './Board';
+import { attachPieceToBoard, clearFullLines } from './Board';
 import LocalPlayer from './LocalPlayer';
 import { canPieceBeHere, isPieceOverflowing, movePiece, rotatePiece, spawnNextPiece, translatePiece } from './Piece';
 import Vector2D from './Vector2D';
@@ -42,17 +42,15 @@ export const movePieceRightAction = (player: LocalPlayer, socket: Socket): Local
 export const rotatePieceAction = (player: LocalPlayer, socket: Socket): LocalPlayer => {
   socket.emit('RotatePiece');
 
-  const freedBoard = detachPieceFromBoard(player.piece, player.board);
   const rotatedPiece = rotatePiece(player.piece);
 
   const kickedPiece = wallKickOffsets
     .map(offset => translatePiece(rotatedPiece, offset))
-    .find(piece => canPieceBeHere(piece, detachPieceFromBoard(player.piece, player.board)));
+    .find(piece => canPieceBeHere(piece, player.board));
 
   if (kickedPiece)
     return {
       ...player,
-      board: attachPieceToBoard(kickedPiece, freedBoard),
       piece: kickedPiece
     };
   else
@@ -62,13 +60,12 @@ export const rotatePieceAction = (player: LocalPlayer, socket: Socket): LocalPla
 export const dropPieceAction = (player: LocalPlayer, tick: number, socket: Socket): LocalPlayer => {
   socket.emit('DropPiece');
 
-  const boardWithoutPiece = detachPieceFromBoard(player.piece, player.board);
   let droppedPiece = player.piece;
 
   while (true) {
     const movedPiece = translatePiece(droppedPiece, { x: 0, y: 1 });
 
-    if (!canPieceBeHere(movedPiece, boardWithoutPiece))
+    if (!canPieceBeHere(movedPiece, player.board))
       break;
 
     droppedPiece = movedPiece;
@@ -76,18 +73,18 @@ export const dropPieceAction = (player: LocalPlayer, tick: number, socket: Socke
 
   const droppedPlayer: LocalPlayer = {
     ...player,
-    board: attachPieceToBoard(droppedPiece, boardWithoutPiece),
     fallTick: tick
   };
 
-  if (isPieceOverflowing(droppedPiece, boardWithoutPiece))
+  if (isPieceOverflowing(droppedPiece, droppedPlayer.board))
     return {
       ...droppedPlayer,
-      piece: null
+      piece: null,
+      board: attachPieceToBoard(droppedPiece, droppedPlayer.board)
     };
   else
     return spawnNextPiece({
       ...droppedPlayer,
-      board: clearFullLines(droppedPlayer.board)
+      board: clearFullLines(attachPieceToBoard(droppedPiece, droppedPlayer.board))
     });
 };

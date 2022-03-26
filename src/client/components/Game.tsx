@@ -1,6 +1,7 @@
 'use strict';
 
 import Board from './Board';
+import { attachPieceToBoard } from '../Board';
 import handleGameKeyDown from '../handleGameKeyDown';
 import handleGameKeyUp from '../handleGameKeyUp';
 import handleGameTick from '../handleGameTick';
@@ -43,12 +44,16 @@ export default () => {
     };
   }, []);
 
+  let board = state.room.player.board;
+  if (state.room.player.piece)
+    board = attachPieceToBoard(state.room.player.piece, board);
+
   const opponents = state.room.players.filter(player => player.name !== state.playerName);
 
   return (
     <div className="game">
       <div className="game-padding"></div>
-      <Board board={state.room.player.board} className="board" />
+      <Board board={board} className="board" />
       <HUD pieceQueue={state.room.player.pieceQueue} players={opponents} />
     </div>
   );

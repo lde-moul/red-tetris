@@ -60,17 +60,11 @@ export const setBoardBlock = (board: Board, pos: Vector2D, type: BlockType): Boa
   return board;
 };
 
-const attachOrDetach = (piece: Piece, board: Board, attaching: boolean): Board =>
+export const attachPieceToBoard = (piece: Piece, board: Board): Board =>
   piece.blocks.reduce(
-    (board, block) => setBoardBlock(board, block, attaching ? piece.type : BlockType.Empty),
+    (board, block) => setBoardBlock(board, block, piece.type),
     board
   );
-
-export const attachPieceToBoard = (piece: Piece, board: Board): Board =>
-  attachOrDetach(piece, board, true);
-
-export const detachPieceFromBoard = (piece: Piece, board: Board): Board =>
-  attachOrDetach(piece, board, false);
 
 const isLineFull = (line: BlockType[]): boolean =>
   line.every(block => block >= BlockType.Filled1);

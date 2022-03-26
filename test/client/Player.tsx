@@ -1,6 +1,6 @@
 'use strict';
 
-import Board, { addMalusLines, attachPieceToBoard, BlockType, clearFullLines, detachPieceFromBoard, getEmptyBoard, setBoardBlock } from '../../src/client/Board';
+import Board, { addMalusLines, attachPieceToBoard, BlockType, clearFullLines, getEmptyBoard, setBoardBlock } from '../../src/client/Board';
 import shapes from '../../src/server/shapes';
 
 import assert from 'assert';
@@ -28,7 +28,7 @@ describe('Board', function() {
     assert.deepStrictEqual(getEmptyBoard({ x: 10, y: 20 }), expected);
   });
 
-  it('should fill and then unfill 4 blocks on the board when a T piece is attached to and then detached from it', () => {
+  it('should fill 4 blocks on the board when a T piece is attached to it', () => {
     const expected = produce(getEmptyBoard({ x: 10, y: 20 }), prev => {
       prev.blocks[0][1] = BlockType.Filled6;
       prev.blocks[1][0] = BlockType.Filled6;
@@ -38,9 +38,6 @@ describe('Board', function() {
 
     let board = attachPieceToBoard(shapes[5], getEmptyBoard({ x: 10, y: 20 }));
     assert.deepStrictEqual(board, expected);
-
-    board = detachPieceFromBoard(shapes[5], board);
-    assert.deepStrictEqual(board, getEmptyBoard({ x: 10, y: 20 }));
   });
 
   it('should clear 2 lines and make all blocks above fall', () => {
