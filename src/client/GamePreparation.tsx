@@ -12,10 +12,14 @@ export default () =>
 
   const names = state.room.players.map((player: Player) => player.name);
 
+  const handleStart = () => {
+    state.socket.emit('StartGame');
+  }
+
   return (
     <div>
       <PlayerList names={names} />
-      <button>
+      <button type="button" onClick={() => handleStart()}>
         Start
       </button>
     </div>

@@ -4,11 +4,13 @@ import Player from "./Player";
 
 export default class {
   name: string;
+  phase: 'preparation' | 'game';
   players: Player[];
   host?: Player;
 
   constructor(name: string) {
     this.name = name;
+    this.phase = 'preparation';
     this.players = [];
   }
 
@@ -35,6 +37,13 @@ export default class {
 
     for (const receiver of this.players)
       receiver.socket.emit('SetHost', host.name);
+  }
+
+  startGame() {
+    this.phase = 'game';
+
+    for (const receiver of this.players)
+      receiver.socket.emit('StartGame');
   }
 
   emitState(player: Player) {

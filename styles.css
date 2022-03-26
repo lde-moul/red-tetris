@@ -1,0 +1,18 @@
+body {
+  margin: 0px;
+}
+
+.board {
+  display: grid;
+  margin: auto;
+  gap: 0.1vmin;
+  width: 50vmin;
+  height: 100vmin;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+}
+
+.block {
+  background: orangered;
+  border: 1vmin outset orangered;
+}

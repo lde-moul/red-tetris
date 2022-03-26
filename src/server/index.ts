@@ -73,6 +73,12 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('StartGame', () => {
+    let room = player.room;
+
+    if (!(room && room.phase == 'preparation' && room.host == player))
+      return;
+
+    room.startGame();
   });
 });
 

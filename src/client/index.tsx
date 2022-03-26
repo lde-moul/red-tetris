@@ -1,5 +1,6 @@
 'use strict';
 
+import Game from './Game';
 import GamePreparation from './GamePreparation';
 import PlayerCreation from './PlayerCreation';
 import RoomSelection from './RoomSelection';
@@ -52,6 +53,16 @@ function initializeSocket(state: State, setState: StateSetter)
       draft.pageId = 'GamePreparation';
     }));
   });
+
+  state.socket.on('StartGame', () => {
+    setState(prev => produce(prev, draft => {
+      draft.pageId = 'Game';
+
+      draft.room.players.forEach(player => {
+        player.pieces = [];
+      });
+    }));
+  });
 }
 
 function App()
@@ -72,6 +83,9 @@ function App()
     break;
   case 'GamePreparation':
     Page = GamePreparation;
+    break;
+  case 'Game':
+    Page = Game;
     break;
   }
 
