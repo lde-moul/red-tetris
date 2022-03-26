@@ -18,10 +18,10 @@ export default ({ pieceQueue }: PieceQueueProps) => {
       x: 0.5 - Math.min(...piece.blocks.map(block => block.x)),
       y: 0.5 - Math.min(...piece.blocks.map(block => block.y))
     })
-  ).map(piece => {
+  ).map((piece, key) => {
     let board = getEmptyBoard({ x: 4, y: 2 });
     board = attachPieceToBoard(piece, board);
-    return <Board board={board} className="piece-queue-board" />;
+    return <Board key={key} board={board} className="piece-queue-board" />;
   });
 
   return (

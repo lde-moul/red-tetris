@@ -30,9 +30,9 @@ export default () => {
     );
 
     return [
-      <div>{name}</div>,
-      <div>{hostMark}</div>,
-      <div>{changeHostButton}</div>
+      <div key={name + ".name"}>{name}</div>,
+      <div key={name + ".hostMark"}>{hostMark}</div>,
+      <div key={name + ".changeHostButton"}>{changeHostButton}</div>
     ];
   });
 

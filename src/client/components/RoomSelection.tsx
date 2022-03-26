@@ -22,7 +22,7 @@ export default () => {
   }, []);
 
   const rooms = state.roomNames.map(name =>
-    <li>
+    <li key={name}>
       <button type="button" onClick={() => handleJoin(name)}>
         {name}
       </button>

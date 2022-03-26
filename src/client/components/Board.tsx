@@ -12,9 +12,13 @@ interface BoardProps {
 
 export default ({ board, className }: BoardProps) => {
   let blocks = [];
-  for (const line of board.blocks)
-    for (const blockType of line)
-      blocks.push(<Block type={blockType} />);
+  let key = 0;
+  for (const line of board.blocks) {
+    for (const blockType of line) {
+      blocks.push(<Block key={key} type={blockType} />);
+      key++;
+    }
+  }
 
   return (
     <div className={className}>

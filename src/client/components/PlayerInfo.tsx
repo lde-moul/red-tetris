@@ -17,9 +17,9 @@ const getSizeClass = (numPlayers: number) =>
   );
 
 export default ({ player, numPlayers }: PlayerInfoProps) => {
-  const columns = player.spectrum.map(height => {
+  const columns = player.spectrum.map((height, key) => {
     const style = { height: (height / 20 * 100) + '%' };
-    return <div className="spectrum-column" style={style}></div>;
+    return <div key={key} className="spectrum-column" style={style}></div>;
   });
 
   return (
