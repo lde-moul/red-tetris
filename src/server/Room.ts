@@ -12,6 +12,7 @@ export default class {
   players: Player[];
   host?: Player;
   pieceQueue: Piece[];
+  pickableShapes: Piece[];
 
   constructor(name: string) {
     this.name = name;
@@ -49,6 +50,7 @@ export default class {
   startPreparation() {
     this.phase = 'preparation';
     this.pieceQueue = [];
+    this.pickableShapes = [ ...shapes ];
 
     for (const receiver of this.players)
       receiver.socket.emit('RestartGame');
@@ -85,8 +87,11 @@ export default class {
   }
 
   chooseNextPiece() {
-    const shapeId = Math.floor(Math.random() * shapes.length);
-    const piece = shapes[shapeId].clone();
+    const shapeId = Math.floor(Math.random() * this.pickableShapes.length);
+    const piece = this.pickableShapes[shapeId].clone();
+    this.pickableShapes.splice(shapeId, 1);
+    if (this.pickableShapes.length == 0)
+      this.pickableShapes = [ ...shapes ];
 
     const bottom = Math.max(...piece.blocks.map(block => block.y));
     piece.translate(new Vector2D(10 / 2 - piece.center.x, -0.5 - bottom));
