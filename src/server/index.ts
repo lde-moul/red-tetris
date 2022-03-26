@@ -33,7 +33,7 @@ io.on('connection', (socket: Socket) => {
     players.splice(players.indexOf(player), 1);
   })
 
-  socket.on('CreatePlayer', (name: string) => {
+  socket.on('CreatePlayer', (name: string, ack?: Function) => {
     player.name = name;
   });
 });

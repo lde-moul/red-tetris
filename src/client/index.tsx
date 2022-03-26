@@ -3,9 +3,9 @@
 import TitleMenu from './TitleMenu';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 
-let socket = io();
+let socket: Socket = io();
 
 function App()
 {
